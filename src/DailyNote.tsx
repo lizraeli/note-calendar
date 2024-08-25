@@ -53,7 +53,6 @@ function DailyNotes() {
     }
 
     const doUpdateNote = async () => {
-      setNote({ ...note, content: html });
       await throttleUpdateNote(note, html);
     };
 

@@ -15,13 +15,11 @@ export const AuthenticatedRoute = ({ component }: Props) => {
   const session = useSession();
 
   const signInAnonymously = async () => {
-    const { data, error } = await supabase.auth.signInAnonymously();
+    const { error } = await supabase.auth.signInAnonymously();
 
     if (error) {
       console.error('error signing in anonymously');
     }
-
-    console.log('data: ', data);
   };
 
   if (!session) {
