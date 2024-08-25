@@ -3,7 +3,7 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { ComponentType } from 'react';
 import { User } from '@supabase/supabase-js';
 import useSession from '../supabase/useSession';
-import supabase from '../supabase';
+import supabase, { supabaseRedirectUrl } from '../supabase';
 import Header from '../Header';
 import './styles.css';
 
@@ -13,14 +13,27 @@ type Props = {
 
 export const AuthenticatedRoute = ({ component }: Props) => {
   const session = useSession();
+
+  const signInAnonymously = async () => {
+    const { data, error } = await supabase.auth.signInAnonymously();
+
+    if (error) {
+      console.error('error signing in anonymously');
+    }
+
+    console.log('data: ', data);
+  };
+
   if (!session) {
     return (
       <div className="container">
         <div className="title">Notes App</div>
         <div className="sub-title">Sign in or sign up to continue</div>
 
+        <button onClick={signInAnonymously}>Sign in as anonymous user</button>
         <Auth
           supabaseClient={supabase}
+          redirectTo={supabaseRedirectUrl}
           appearance={{
             theme: ThemeSupa,
             style: {

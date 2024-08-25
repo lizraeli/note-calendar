@@ -5,13 +5,6 @@ import { stringMonthYearToDate } from './utils';
 
 export type Note = Tables<'notes'>;
 
-// export type Note = Omit<
-//   Database['public']['Tables']['notes']['Row'],
-//   'date'
-// > & {
-//   date: Date;
-// };
-
 export async function getCurrentUser() {
   return supabase.auth.getUser();
 }
@@ -23,10 +16,6 @@ export async function getNotes() {
   }
 
   return notes;
-  // return notes.map((note) => ({
-  //   ...note,
-  //   date: parseISO(note.date),
-  // }));
 }
 
 export async function getNotesForMonth(month: string, year: string) {

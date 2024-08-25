@@ -16,7 +16,9 @@ export default function Header({ user }: Props) {
 
   return (
     <div id="header">
-      <div id="user">Logged in as {user.email}</div>
+      <div id="user">
+        Logged in as {user.is_anonymous ? 'Anonymous' : user.email}
+      </div>
       <div id="sign-out" onClick={onSignOut}>
         Sign out
       </div>
