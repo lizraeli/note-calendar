@@ -76,6 +76,6 @@ export async function updateNote(note: Note, content: string) {
 }
 
 /**
- * Calls updateNote no more than once within a 3 second period
+ * Calls updateNote no more than once at the end of each 3 second period
  */
 export const throttleUpdateNote = throttle(updateNote, 3000);

@@ -26,9 +26,13 @@ export const AuthenticatedRoute = ({ component }: Props) => {
     return (
       <div className="container">
         <div className="title">Notes App</div>
-        <div className="sub-title">Sign in or sign up to continue</div>
 
-        <button onClick={signInAnonymously}>Sign in as anonymous user</button>
+        <div className="sub-container">
+          <div className="sub-title">Sign in or sign up to continue.</div>
+
+          <button onClick={signInAnonymously}>Sign in anonymously</button>
+        </div>
+
         <Auth
           supabaseClient={supabase}
           redirectTo={supabaseRedirectUrl}
@@ -45,8 +49,8 @@ export const AuthenticatedRoute = ({ component }: Props) => {
                 color: 'black',
               },
               button: {
-                fontFamily: "'Lato', sans-serif",
-                backgroundColor: '#f9f2f2',
+                fontFamily: 'Lato, sans-serif',
+                backgroundColor: 'rgb(249, 242, 242)',
                 color: 'black',
                 borderColor: 'lightgray',
                 borderRadius: '10px',
