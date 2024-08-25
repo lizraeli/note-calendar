@@ -1,0 +1,16 @@
+#header {
+  width: 100%;
+  position: static;
+  padding: 0.25rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 14px;
+}
+
+#sign-out {
+  text-decoration: underline;
+  cursor: pointer;
+}

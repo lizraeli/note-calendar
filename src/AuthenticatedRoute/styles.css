@@ -1,0 +1,22 @@
+.authenticated-route {
+  height: 100%;
+  width: 100%;
+}
+
+.container,
+.auth-container {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#auth-sign-in,
+#auth-sign-up,
+#auth-forgot-password {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
