@@ -1,14 +1,14 @@
-.notes-preview {
+.container {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.notes-preview .date {
+.date {
   font-size: 12px;
 }
 
-.notes-preview .html {
+.html {
   font-size: 12px;
   height: 100px;
   margin: 0px;
@@ -38,7 +38,7 @@
 }
 
 @media (max-width: 1028px) {
-  .notes-preview .html {
+  .html {
     display: none;
   }
 }

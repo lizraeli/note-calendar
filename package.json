@@ -28,6 +28,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1",
     "throttleit": "^2.1.0",
+    "typescript-plugin-css-modules": "^5.1.0",
     "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {

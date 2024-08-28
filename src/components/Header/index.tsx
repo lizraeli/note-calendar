@@ -1,5 +1,5 @@
 import { User } from '@supabase/supabase-js';
-import './styles.css';
+import styles from './styles.module.css';
 import supabase from '../../supabase';
 
 type Props = {
@@ -15,11 +15,9 @@ export default function Header({ user }: Props) {
   };
 
   return (
-    <div id="header">
-      <div id="user">
-        Logged in as {user.is_anonymous ? 'Anonymous' : user.email}
-      </div>
-      <div id="sign-out" onClick={onSignOut}>
+    <div id={styles.header}>
+      <div>Logged in as {user.is_anonymous ? 'Anonymous' : user.email}</div>
+      <div id={styles['sign-out']} onClick={onSignOut}>
         Sign out
       </div>
     </div>

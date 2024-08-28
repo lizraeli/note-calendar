@@ -1,6 +1,6 @@
 import DOMPurify from 'dompurify';
 import { useMemo } from 'react';
-import './styles.css';
+import styles from './styles.module.css';
 import { dateFormatterShort } from '../../utils';
 
 function DailyNotesPreview({
@@ -17,13 +17,13 @@ function DailyNotesPreview({
   const title = dateFormatterShort.format(date);
 
   return (
-    <div className="notes-preview">
-      <div className="date">
+    <div className={styles.container}>
+      <div className={styles.date}>
         {isToday && 'Today, '}
         {title}
       </div>
       <div
-        className="html"
+        className={styles.html}
         dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
       />
     </div>
