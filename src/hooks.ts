@@ -17,7 +17,7 @@ export function useNotes() {
         }
 
         setNotes(fetchedNotes);
-      } catch (err) {
+      } catch {
         console.log('error fetching notes');
       }
     };
@@ -49,7 +49,7 @@ export function useNotesForMonth(month?: string, year?: string) {
         }
 
         setNotesCalendar(calendar);
-      } catch (err) {
+      } catch {
         console.log('error fetching notes');
       }
     };

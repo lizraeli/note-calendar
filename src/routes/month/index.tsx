@@ -112,9 +112,9 @@ function MonthView() {
                   </div>
                 ))}
 
-                {daysAndEmptySpaces.map((day) => {
+                {daysAndEmptySpaces.map((day, index) => {
                   if (day === null) {
-                    return <div className="cell empty"></div>;
+                    return <div key={index} className="cell empty"></div>;
                   }
 
                   const html = notesCalendar[dateToString(day)] || '...';

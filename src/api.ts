@@ -1,7 +1,7 @@
-import throttle from 'throttleit';
-import supabase from './supabase';
 import { Tables } from './supabase/types';
 import { stringMonthYearToDate } from './utils';
+import supabase from './supabase';
+import throttle from 'throttleit';
 
 export type Note = Tables<'notes'>;
 
