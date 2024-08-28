@@ -1,7 +1,7 @@
 import DOMPurify from 'dompurify';
-import './App.css';
 import { useMemo } from 'react';
-import { dateFormatterShort } from './utils';
+import './styles.css';
+import { dateFormatterShort } from '../../utils';
 
 function DailyNotesPreview({
   html,

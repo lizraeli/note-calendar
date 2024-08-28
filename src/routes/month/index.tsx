@@ -1,17 +1,17 @@
-import './App.css';
-import DailyNotesPreview from './NotesPreview';
+import { useEffect, useRef } from 'react';
+import DailyNotesPreview from '../../components/NotesPreview';
 import { format } from 'date-fns/format';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { addMonths, isToday, subMonths } from 'date-fns';
-import { useNotesForMonth } from './hooks';
+import { useNotesForMonth } from '../../hooks';
 import { motion } from 'framer-motion';
-import { getDaysInMonth } from './utils';
-import Spinner from './Spinner';
-import LeftArrowIcon from './assets/arrow-left.svg?react';
-import LeftArrowLargeIcon from './assets/arrow-prev-large.svg?react';
-import RightArrowLargeIcon from './assets/arrow-next-large.svg?react';
-import RightArrowIcon from './assets/arrow-right.svg?react';
-import { useEffect, useRef } from 'react';
+import { getDaysInMonth } from '../../utils';
+import Spinner from '../../components/Spinner';
+import LeftArrowIcon from '../../assets/arrow-left.svg?react';
+import LeftArrowLargeIcon from '../../assets/arrow-prev-large.svg?react';
+import RightArrowLargeIcon from '../../assets/arrow-next-large.svg?react';
+import RightArrowIcon from '../../assets/arrow-right.svg?react';
+import './styles.css';
 
 function monthAndYearDisplay(date: Date) {
   const monthName = date.toLocaleString('default', { month: 'long' });

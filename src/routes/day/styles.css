@@ -1,0 +1,66 @@
+.daily-note-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  .spinner-container {
+    width: 550px;
+    min-height: 275px;
+  }
+}
+
+.editing-container {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 50px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0.5px 1px 0px #701b1b;
+  background-color: #f9f2f2;
+
+  .rsw-editor {
+    border-radius: 0px;
+    padding: 1px;
+    background-color: #fff;
+    border: 1px solid;
+  }
+
+  .control-group .button-group {
+    display: flex;
+    gap: 5px;
+    padding-bottom: 5px;
+  }
+
+  .control-group .button-group button {
+    background-color: #f9f2f2;
+  }
+
+  .control-group .button-group button.is-active {
+    background-color: #e8e3f1;
+  }
+}
+
+.editing-container .header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.editing-container .all-notes-btn {
+  border: none;
+}
+
+.daily-notes-title {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.all-notes-link button {
+  padding: 8px;
+}

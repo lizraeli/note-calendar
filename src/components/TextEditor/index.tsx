@@ -7,16 +7,17 @@ import { Editor, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import { useCallback, useMemo } from 'react';
-import BoldIcon from '../assets/bold.svg?react';
-import ItalicIcon from '../assets/italic.svg?react';
-import UnorderedListIcon from '../assets/list-unordered.svg?react';
-import OrderedList from '../assets/list-ordered.svg?react';
-import LinkIcon from '../assets/link.svg?react';
-import UnlinkIcon from '../assets/link-unlink.svg?react';
-import UndoIcon from '../assets/undo.svg?react';
-import RedoIcon from '../assets/redo.svg?react';
+import BoldIcon from '../../assets/bold.svg?react';
+import ItalicIcon from '../../assets/italic.svg?react';
+import UnorderedListIcon from '../../assets/list-unordered.svg?react';
+import OrderedList from '../../assets/list-ordered.svg?react';
+import LinkIcon from '../../assets/link.svg?react';
+import UnlinkIcon from '../../assets/link-unlink.svg?react';
+import UndoIcon from '../../assets/undo.svg?react';
+import RedoIcon from '../../assets/redo.svg?react';
 import DOMPurify from 'dompurify';
 import Spinner from '../Spinner';
+import './styles.css';
 
 const MenuBar = ({ editor }: { editor: Editor }) => {
   const setLink = useCallback(() => {

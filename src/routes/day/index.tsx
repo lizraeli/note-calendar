@@ -2,14 +2,14 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { addDays, subDays } from 'date-fns';
-import { dateFormatterLong, dateToString, stringToDate } from './utils';
-import Tiptap from './TextEditor/TipTap';
-import HomeIcon from './assets/home.svg?react';
-import LeftArrowLargeIcon from './assets/arrow-prev-large.svg?react';
-import RightArrowLargeIcon from './assets/arrow-next-large.svg?react';
-import { addNote, getNoteByDate, Note, throttleUpdateNote } from './api';
-import Spinner from './Spinner';
-import './App.css';
+import { dateFormatterLong, dateToString, stringToDate } from '../../utils';
+import Tiptap from '../../components/TextEditor';
+import HomeIcon from '../../assets/home.svg?react';
+import LeftArrowLargeIcon from '../../assets/arrow-prev-large.svg?react';
+import RightArrowLargeIcon from '../../assets/arrow-next-large.svg?react';
+import { addNote, getNoteByDate, Note, throttleUpdateNote } from '../../api';
+import Spinner from '../../components/Spinner';
+import './styles.css';
 
 function DailyNotes() {
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ import { ComponentType } from 'react';
 import { User } from '@supabase/supabase-js';
 import useSession from '../supabase/useSession';
 import supabase, { supabaseRedirectUrl } from '../supabase';
-import Header from '../Header';
+import Header from '../components/Header';
 import './styles.css';
 
 type Props = {

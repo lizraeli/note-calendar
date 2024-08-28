@@ -1,0 +1,44 @@
+.notes-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.notes-preview .date {
+  font-size: 12px;
+}
+
+.notes-preview .html {
+  font-size: 12px;
+  height: 100px;
+  margin: 0px;
+  padding-left: 5px;
+  border-radius: 5px;
+  overflow: scroll;
+  ul {
+    padding-left: 10px;
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+
+  ol {
+    padding-left: 20px;
+    padding-top: 0px;
+  }
+
+  li {
+    padding-left: 0px;
+    padding-top: 0px;
+    margin: 0px;
+  }
+
+  p {
+    margin: 0px;
+  }
+}
+
+@media (max-width: 1028px) {
+  .notes-preview .html {
+    display: none;
+  }
+}

@@ -2,8 +2,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
-import DailyNotes from './DailyNote';
-import MonthView from './MonthView';
+import DailyNotes from './routes/day';
+import MonthView from './routes/month';
 import { AuthenticatedRoute } from './AuthenticatedRoute';
 
 const router = createBrowserRouter([

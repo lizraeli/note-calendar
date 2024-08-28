@@ -1,7 +1,7 @@
-import './App.css';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Spinner from './Spinner';
+import './styles.css';
+import Spinner from './components/Spinner';
 
 function App() {
   const navigate = useNavigate();

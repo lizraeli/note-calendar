@@ -1,6 +1,6 @@
 import { User } from '@supabase/supabase-js';
 import './styles.css';
-import supabase from '../supabase';
+import supabase from '../../supabase';
 
 type Props = {
   user: User;
