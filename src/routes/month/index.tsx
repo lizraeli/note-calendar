@@ -11,7 +11,7 @@ import LeftArrowIcon from '../../assets/arrow-left.svg?react';
 import LeftArrowLargeIcon from '../../assets/arrow-prev-large.svg?react';
 import RightArrowLargeIcon from '../../assets/arrow-next-large.svg?react';
 import RightArrowIcon from '../../assets/arrow-right.svg?react';
-import './styles.css';
+import styles from './styles.module.css';
 
 function monthAndYearDisplay(date: Date) {
   const monthName = date.toLocaleString('default', { month: 'long' });
@@ -71,26 +71,28 @@ function MonthView() {
     }`;
 
     return (
-      <div className="calendar">
-        <div className="title">Daily Notes</div>
-        <div className="container">
+      <div className={styles['calendar']}>
+        <div>Daily Notes</div>
+        <div className={styles['container']}>
           <motion.div
             key={firstDay.getTime()}
-            className="month"
+            className={styles['month']}
             drag="x"
             whileDrag={{ scale: 1.2 }}
           >
-            <div className="month-controls">
+            <div className={styles['month-controls']}>
               <Link to={prevMonthUrl}>
                 <LeftArrowIcon />
               </Link>
-              <div className="month-name">{monthAndYearDisplay(firstDay)}</div>
+              <div className={styles['month-name']}>
+                {monthAndYearDisplay(firstDay)}
+              </div>
               <Link to={nextMonthUrl}>
                 <RightArrowIcon />
               </Link>
             </div>
-            <div className="days-container">
-              <div className="prev-month">
+            <div className={styles['days-container']}>
+              <div>
                 <motion.div
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 1.4 }}
@@ -105,21 +107,25 @@ function MonthView() {
                   <LeftArrowLargeIcon title="left-arrow-large" />
                 </motion.div>
               </div>
-              <div className="days-in-month">
+              <div className={styles['days-in-month']}>
                 {daysOfTheWeek.map((dayName) => (
-                  <div key={dayName} className="cell day-name">
+                  <div key={dayName} className={styles['day-name-cell']}>
                     {dayName}
                   </div>
                 ))}
 
                 {daysAndEmptySpaces.map((day, index) => {
                   if (day === null) {
-                    return <div key={index} className="cell empty"></div>;
+                    return (
+                      <div key={index} className={styles['empty-cell']}></div>
+                    );
                   }
 
                   const html = notesCalendar[dateToString(day)] || '...';
                   const isDayToday = isToday(day);
-                  const className = isDayToday ? 'cell day today' : 'cell day';
+                  const className = isDayToday
+                    ? styles['today-cell']
+                    : styles['day-cell'];
 
                   return (
                     <motion.div
@@ -145,7 +151,7 @@ function MonthView() {
                   );
                 })}
               </div>
-              <div className="next-month">
+              <div>
                 <motion.div
                   className="motion-link"
                   whileHover={{ scale: 1.2 }}

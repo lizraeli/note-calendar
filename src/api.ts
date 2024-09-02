@@ -61,7 +61,10 @@ export async function addNote(date: Date): Promise<Note | null> {
   return notes[0] ?? null;
 }
 
-export async function updateNote(note: Note, content: string) {
+export async function updateNote(
+  note: Note,
+  content: string
+): Promise<Note[] | null> {
   const { error, data: updatedNote } = await supabase
     .from('notes')
     .update({ content })

@@ -69,11 +69,13 @@
   }
 }
 
-.cell.empty {
+.empty-cell {
+  composes: cell;
   border: none;
 }
 
-.cell.day-name {
+.day-name-cell {
+  composes: cell;
   border: none;
   margin-bottom: 5px;
   padding: 5px;
@@ -82,7 +84,8 @@
   font-weight: 600;
 }
 
-.cell.day {
+.day-cell {
+  composes: cell;
   cursor: pointer;
   padding: 10px;
   border-radius: 10px;
@@ -90,16 +93,17 @@
   background-color: #f9f2f2;
 }
 
-.cell.day:hover {
+.day-cell:hover {
   z-index: 100;
 }
 
-.cell.day.today {
+.today-cell {
+  composes: day-cell;
   padding: 10px;
   border-radius: 10px;
   border: 2px solid #8888ff;
 }
 
-.cell.day:hover {
+.day-cell:hover {
   background-color: #8888ff;
 }

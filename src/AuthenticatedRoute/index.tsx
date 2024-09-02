@@ -5,7 +5,7 @@ import { User } from '@supabase/supabase-js';
 import useSession from '../supabase/useSession';
 import supabase, { supabaseRedirectUrl } from '../supabase';
 import Header from '../components/Header';
-import './styles.css';
+import styles from './styles.module.css';
 
 type Props = {
   component: ComponentType<{ user: User }>;
@@ -24,10 +24,10 @@ export const AuthenticatedRoute = ({ component }: Props) => {
 
   if (!session) {
     return (
-      <div className="container">
+      <div className={styles.container}>
         <div className="title">Notes App</div>
 
-        <div className="sub-container">
+        <div className={styles['sub-container']}>
           <div className="sub-title">Sign in or sign up to continue.</div>
 
           <button onClick={signInAnonymously}>Sign in anonymously</button>

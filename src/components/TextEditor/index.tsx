@@ -17,7 +17,7 @@ import UndoIcon from '../../assets/undo.svg?react';
 import RedoIcon from '../../assets/redo.svg?react';
 import DOMPurify from 'dompurify';
 import Spinner from '../Spinner';
-import './styles.css';
+import styles from './styles.module.css';
 
 const MenuBar = ({ editor }: { editor: Editor }) => {
   const setLink = useCallback(() => {
@@ -50,7 +50,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
 
   return (
     <div className="control-group">
-      <div className="button-group">
+      <div className={styles['button-group']}>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}

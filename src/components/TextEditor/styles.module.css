@@ -1,4 +1,18 @@
-.tiptap {
+.button-group {
+  display: flex;
+  gap: 5px;
+  padding-bottom: 5px;
+}
+
+.button-group button {
+  background-color: #f9f2f2;
+}
+
+.button-group button.is-active {
+  background-color: #e8e3f1;
+}
+
+:global(.tiptap) {
   min-height: 200px;
   border-radius: 5px;
   padding: 10px;

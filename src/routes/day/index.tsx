@@ -3,13 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { addDays, subDays } from 'date-fns';
 import { dateFormatterLong, dateToString, stringToDate } from '../../utils';
-import Tiptap from '../../components/TextEditor';
+import TextEditor from '../../components/TextEditor';
 import HomeIcon from '../../assets/home.svg?react';
 import LeftArrowLargeIcon from '../../assets/arrow-prev-large.svg?react';
 import RightArrowLargeIcon from '../../assets/arrow-next-large.svg?react';
 import { addNote, getNoteByDate, Note, throttleUpdateNote } from '../../api';
 import Spinner from '../../components/Spinner';
-import './styles.css';
+import styles from './styles.module.css';
 
 function DailyNotes() {
   const navigate = useNavigate();
@@ -65,9 +65,9 @@ function DailyNotes() {
     }
 
     return (
-      <div className="daily-note-container">
+      <div className={styles['daily-note-container']}>
         {prevDayUrl && (
-          <div className="prev-day">
+          <div>
             <motion.div
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 1.4 }}
@@ -84,23 +84,26 @@ function DailyNotes() {
           </div>
         )}
 
-        <div className="editing-container">
-          <div className="header">
-            <a className="all-notes-link" onClick={() => navigate('..')}>
+        <div className={styles['editing-container']}>
+          <div className={styles['header']}>
+            <a
+              className={styles['all-notes-link']}
+              onClick={() => navigate('..')}
+            >
               <button className="home-btn">
                 <HomeIcon />
               </button>
             </a>
           </div>
 
-          <div className="daily-notes-title">
+          <div className={styles['daily-notes-title']}>
             Daily notes for {dateFormatterLong.format(parsedDate)}
           </div>
 
           {!note ? (
             <Spinner />
           ) : (
-            <Tiptap
+            <TextEditor
               html={note.content}
               setHtml={onUpdateHtml}
               isFetching={isFetchingNote}
@@ -109,7 +112,7 @@ function DailyNotes() {
         </div>
 
         {nextDayUrl && (
-          <div className="next-day">
+          <div>
             <motion.div
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 1.4 }}

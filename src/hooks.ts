@@ -1,32 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getNotes, getNotesForMonth, Note } from './api';
+import { getNotesForMonth } from './api';
 
 type NotesCalendar = Record<string, string>;
-
-export function useNotes() {
-  const [notes, setNotes] = useState<Note[] | null>(null);
-
-  useEffect(() => {
-    const doGetNotes = async () => {
-      try {
-        const fetchedNotes = await getNotes();
-
-        const calendar: NotesCalendar = {};
-        for (const note of fetchedNotes) {
-          calendar[note.date] = note.content;
-        }
-
-        setNotes(fetchedNotes);
-      } catch {
-        console.log('error fetching notes');
-      }
-    };
-
-    doGetNotes();
-  }, []);
-
-  return notes;
-}
 
 export function useNotesForMonth(month?: string, year?: string) {
   // const [notes, setNotes] = useState<Note[] | null>(null);

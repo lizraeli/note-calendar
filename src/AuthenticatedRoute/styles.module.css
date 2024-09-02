@@ -3,23 +3,13 @@
   width: 100%;
 }
 
-.container,
-.auth-container {
+.container {
   margin: 1rem;
   display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
   justify-content: flex-start;
-}
-
-#auth-sign-in,
-#auth-sign-up,
-#auth-forgot-password {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
 }
 
 .sub-container {
@@ -34,4 +24,13 @@
     font-family: Lato, sans-serif;
     color: rgb(85, 84, 84);
   }
+}
+
+:global(#auth-sign-in),
+:global(#auth-sign-up),
+:global(#auth-forgot-password) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
