@@ -100,15 +100,11 @@ function DailyNotes() {
             Daily notes for {dateFormatterLong.format(parsedDate)}
           </div>
 
-          {!note ? (
-            <Spinner />
-          ) : (
-            <TextEditor
-              html={note.content}
-              setHtml={onUpdateHtml}
-              isFetching={isFetchingNote}
-            />
-          )}
+          <TextEditor
+            html={note ? note.content : ''}
+            setHtml={onUpdateHtml}
+            isFetching={isFetchingNote}
+          />
         </div>
 
         {nextDayUrl && (

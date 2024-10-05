@@ -145,13 +145,15 @@ const TipTap = ({
     [sanitizedHTML]
   );
 
+  if (!editor) {
+    return null;
+  }
+
   return (
-    editor && (
-      <>
-        <MenuBar editor={editor} />
-        {isFetching ? <Spinner /> : <EditorContent editor={editor} />}
-      </>
-    )
+    <>
+      <MenuBar editor={editor} />
+      {isFetching ? <Spinner /> : <EditorContent editor={editor} />}
+    </>
   );
 };
 
