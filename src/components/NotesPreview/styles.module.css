@@ -6,14 +6,13 @@
 
 .date {
   font-size: 12px;
+  font-size: clamp(10px, 2vw, 14px);
 }
 
 .html {
-  font-size: 12px;
-  height: 50px;
+  font-size: clamp(10px, 1.5vw, 14px);
   margin: 0px;
   padding-left: 5px;
-  border-radius: 5px;
   overflow: scroll;
   ul {
     padding-left: 10px;
@@ -37,8 +36,12 @@
   }
 }
 
-@media (max-width: 1028px) {
+@media (max-width: 800px) {
+  .container {
+    gap: 0;
+  }
+
   .html {
-    display: none;
+    padding-left: 1px;
   }
 }

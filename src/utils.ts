@@ -37,9 +37,7 @@ export function getDaysInMonth(month: number, year: number): Date[] {
 }
 
 export const dateFormatterShort = new Intl.DateTimeFormat(navigator.language, {
-  weekday: 'short',
-  month: '2-digit',
-  day: '2-digit',
+  day: 'numeric',
 });
 
 export const dateFormatterLong = new Intl.DateTimeFormat(navigator.language, {

@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: 40px;
+  margin: 0 5px;
 }
 
 .calendar .container {
@@ -60,11 +61,10 @@
 }
 
 .days-in-month {
-  display: grid;
-  grid-template-columns: repeat(7, 100px);
-  grid-gap: 1px;
   margin-bottom: 50px;
-  min-height: 500px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(20px, 100px));
+  /* grid-gap: 1px; */
 }
 
 .cell {
@@ -72,12 +72,8 @@
   margin: 2px;
   align-items: center;
   border-color: black;
-}
-
-@media (max-width: 1028px) {
-  .cell {
-    min-width: 50px;
-  }
+  height: clamp(50px, 10vw, 100px);
+  overflow: hidden;
 }
 
 .empty-cell {
@@ -93,6 +89,14 @@
   display: flex;
   justify-content: center;
   font-weight: 600;
+  /* position: sticky; */
+  top: 80px;
+  background-color: #f9f2f2;
+  /* height: 500px; */
+  z-index: -1;
+  border: 1px solid;
+  border-radius: 5px;
+  height: fit-content;
 }
 
 .day-cell {
@@ -102,6 +106,7 @@
   border-radius: 10px;
   box-shadow: 1px 1px 0px hsl(0deg 0% 0% / 0.1);
   background-color: #f9f2f2;
+  overflow: hidden;
 }
 
 .today-cell {
@@ -115,4 +120,10 @@
 .day-cell:hover {
   background: #ffc627;
   transition: background-color 500ms;
+}
+
+@media (max-width: 480px) {
+  .day-cell {
+    padding: 5px;
+  }
 }
