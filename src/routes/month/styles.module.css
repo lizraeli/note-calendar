@@ -21,6 +21,7 @@
   background-color: #fefefe;
   border-radius: 5px;
   gap: 15px;
+  z-index: 10;
 
   a {
     display: flex;
@@ -120,6 +121,12 @@
 .day-cell:hover {
   background: #ffc627;
   transition: background-color 500ms;
+  transform: scale(1.25);
+  transition-property: transform;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 250ms;
+  z-index: 0;
 }
 
 @media (max-width: 480px) {
