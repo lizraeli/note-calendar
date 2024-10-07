@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { addDays, subDays } from 'date-fns';
 import { dateFormatterLong, dateToString, stringToDate } from '../../utils';
 import TextEditor from '../../components/TextEditor';
 import HomeIcon from '../../assets/home.svg?react';
-import LeftArrowLargeIcon from '../../assets/arrow-prev-large.svg?react';
-import RightArrowLargeIcon from '../../assets/arrow-next-large.svg?react';
+import LeftArrowIcon from '../../assets/arrow-left.svg?react';
+import RightArrowIcon from '../../assets/arrow-right.svg?react';
 import { addNote, getNoteByDate, Note, throttleUpdateNote } from '../../api';
 import Spinner from '../../components/Spinner';
 import styles from './styles.module.css';
@@ -66,24 +65,6 @@ function DailyNotes() {
 
     return (
       <div className={styles['daily-note-container']}>
-        {prevDayUrl && (
-          <div>
-            <motion.div
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 1.4 }}
-              className="motion-link"
-              onTap={() => navigate(prevDayUrl)}
-              transition={{
-                type: 'spring',
-                stiffness: 150,
-                damping: 10,
-              }}
-            >
-              <LeftArrowLargeIcon title="left-arrow-large" />
-            </motion.div>
-          </div>
-        )}
-
         <div className={styles['editing-container']}>
           <div className={styles['header']}>
             <a
@@ -96,8 +77,20 @@ function DailyNotes() {
             </a>
           </div>
 
-          <div className={styles['daily-notes-title']}>
-            Daily notes for {dateFormatterLong.format(parsedDate)}
+          <div className={styles['daily-note-controls']}>
+            {prevDayUrl && (
+              <Link to={prevDayUrl}>
+                <LeftArrowIcon title="right-arrow-large" />
+              </Link>
+            )}
+            <div className={styles['daily-notes-title']}>
+              Daily notes for {dateFormatterLong.format(parsedDate)}
+            </div>
+            {nextDayUrl && (
+              <Link to={nextDayUrl}>
+                <RightArrowIcon title="right-arrow-large" />
+              </Link>
+            )}
           </div>
 
           <TextEditor
@@ -106,24 +99,6 @@ function DailyNotes() {
             isFetching={isFetchingNote}
           />
         </div>
-
-        {nextDayUrl && (
-          <div>
-            <motion.div
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 1.4 }}
-              className="motion-link"
-              onTap={() => navigate(nextDayUrl)}
-              transition={{
-                type: 'spring',
-                stiffness: 150,
-                damping: 10,
-              }}
-            >
-              <RightArrowLargeIcon title="right-arrow-large" />
-            </motion.div>
-          </div>
-        )}
       </div>
     );
   };

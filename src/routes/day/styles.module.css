@@ -58,11 +58,30 @@
   }
 }
 
+.daily-note-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+
+  a {
+    display: flex;
+    transition-property: transform;
+    transition-duration: 250ms;
+    transition-timing-function: ease-in-out;
+  }
+
+  a:hover {
+    transform: scale(1.4);
+  }
+}
+
 .daily-notes-title {
   display: flex;
   justify-content: center;
-  padding-top: 10px;
-  padding-bottom: 40px;
   font-size: 18px;
   font-weight: 600;
 }
