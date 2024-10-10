@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: 40px;
+  margin: 0 5px;
 }
 
 .calendar .container {
@@ -13,16 +14,27 @@
 }
 
 .month-controls {
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #fefefe;
+  border-radius: 5px;
   gap: 15px;
+  z-index: 10;
 
   a {
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    transition-property: transform;
+    transition-duration: 250ms;
+    transition-timing-function: ease-in-out;
+  }
+
+  a:hover {
+    transform: scale(1.4);
   }
 }
 
@@ -31,42 +43,38 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .month-name {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-weight: 600;
 }
 
-.days-container {
+.days-in-month-container {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: 20px;
+  width: 100%;
+  padding-top: 50px;
 }
 
 .days-in-month {
+  margin-bottom: 50px;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-gap: 1px;
+  grid-template-columns: repeat(7, minmax(20px, 100px));
+  /* grid-gap: 1px; */
 }
 
 .cell {
   border: 1px solid;
   margin: 2px;
-  min-width: 100px;
   align-items: center;
   border-color: black;
-}
-
-@media (max-width: 1028px) {
-  .cell {
-    min-width: 50px;
-  }
+  height: clamp(50px, 10vw, 100px);
+  overflow: hidden;
 }
 
 .empty-cell {
@@ -82,6 +90,14 @@
   display: flex;
   justify-content: center;
   font-weight: 600;
+  /* position: sticky; */
+  top: 80px;
+  background-color: #f9f2f2;
+  /* height: 500px; */
+  z-index: -1;
+  border: 1px solid;
+  border-radius: 5px;
+  height: fit-content;
 }
 
 .day-cell {
@@ -89,21 +105,32 @@
   cursor: pointer;
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0.5px 0.5px 0px #000000;
+  box-shadow: 1px 1px 0px hsl(0deg 0% 0% / 0.1);
   background-color: #f9f2f2;
-}
-
-.day-cell:hover {
-  z-index: 100;
+  overflow: hidden;
 }
 
 .today-cell {
   composes: day-cell;
   padding: 10px;
   border-radius: 10px;
-  border: 2px solid #8888ff;
+  font-weight: 700;
+  font-size: 14px;
 }
 
 .day-cell:hover {
-  background-color: #8888ff;
+  background: #ffc627;
+  transition: background-color 500ms;
+  transform: scale(1.25);
+  transition-property: transform;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 250ms;
+  z-index: 0;
+}
+
+@media (max-width: 480px) {
+  .day-cell {
+    padding: 5px;
+  }
 }

@@ -1,15 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import DailyNotesPreview from '../../components/NotesPreview';
 import { format } from 'date-fns/format';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { addMonths, isToday, subMonths } from 'date-fns';
 import { useNotesForMonth } from '../../hooks';
-import { motion } from 'framer-motion';
 import { getDaysInMonth } from '../../utils';
 import Spinner from '../../components/Spinner';
 import LeftArrowIcon from '../../assets/arrow-left.svg?react';
-import LeftArrowLargeIcon from '../../assets/arrow-prev-large.svg?react';
-import RightArrowLargeIcon from '../../assets/arrow-next-large.svg?react';
 import RightArrowIcon from '../../assets/arrow-right.svg?react';
 import styles from './styles.module.css';
 
@@ -29,16 +26,6 @@ function MonthView() {
 
   const todayElemRef = useRef<HTMLDivElement>(null);
   const notesCalendar = useNotesForMonth(monthParam, yearParam);
-
-  useEffect(() => {
-    if (todayElemRef.current) {
-      try {
-        todayElemRef.current.scrollIntoView({ behavior: 'smooth' });
-      } catch {
-        console.log('error scrolling to today');
-      }
-    }
-  }, [notesCalendar]);
 
   const navigate = useNavigate();
 
@@ -72,14 +59,8 @@ function MonthView() {
 
     return (
       <div className={styles['calendar']}>
-        <div>Daily Notes</div>
         <div className={styles['container']}>
-          <motion.div
-            key={firstDay.getTime()}
-            className={styles['month']}
-            drag="x"
-            whileDrag={{ scale: 1.2 }}
-          >
+          <div className={styles['month']}>
             <div className={styles['month-controls']}>
               <Link to={prevMonthUrl}>
                 <LeftArrowIcon />
@@ -91,22 +72,7 @@ function MonthView() {
                 <RightArrowIcon />
               </Link>
             </div>
-            <div className={styles['days-container']}>
-              <div>
-                <motion.div
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.4 }}
-                  className="motion-link"
-                  onTap={() => navigate(prevMonthUrl)}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 150,
-                    damping: 10,
-                  }}
-                >
-                  <LeftArrowLargeIcon title="left-arrow-large" />
-                </motion.div>
-              </div>
+            <div className={styles['days-in-month-container']}>
               <div className={styles['days-in-month']}>
                 {daysOfTheWeek.map((dayName) => (
                   <div key={dayName} className={styles['day-name-cell']}>
@@ -128,46 +94,23 @@ function MonthView() {
                     : styles['day-cell'];
 
                   return (
-                    <motion.div
+                    <div
                       key={day.getTime()}
                       className={className}
                       ref={isDayToday ? todayElemRef : null}
-                      whileHover={{ scale: 1.2 }}
-                      whileTap={{ scale: 1.4 }}
-                      onTap={() => navigate(`../../day/${dateToString(day)}`)}
-                      transition={{
-                        type: 'spring',
-                        stiffness: 150,
-                        damping: 10,
-                      }}
+                      onClick={() => navigate(`../../day/${dateToString(day)}`)}
                     >
                       <DailyNotesPreview
                         key={day.getTime()}
                         html={html}
                         date={day}
-                        isToday={isDayToday}
                       />
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
-              <div>
-                <motion.div
-                  className="motion-link"
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 1.4 }}
-                  onTap={() => navigate(nextMonthUrl)}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 150,
-                    damping: 10,
-                  }}
-                >
-                  <RightArrowLargeIcon title="right-arrow-large" />
-                </motion.div>
-              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     );
