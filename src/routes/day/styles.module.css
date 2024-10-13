@@ -9,6 +9,13 @@
   }
 }
 
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
 .editing-container {
   display: flex;
   flex-direction: column;

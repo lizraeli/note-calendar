@@ -15,6 +15,7 @@ function DailyNotes() {
   const { date: urlDate } = useParams();
   const [note, setNote] = useState<Note | null>(null);
   const [isFetchingNote, setIsFetchingNote] = useState(false);
+  const [fetchingError, setFetchingError] = useState<unknown>(null);
   const parsedDate = useMemo(
     () => (urlDate ? stringToDate(urlDate) : null),
     [urlDate]
@@ -31,16 +32,21 @@ function DailyNotes() {
     }
 
     const doFetchNote = async () => {
-      setIsFetchingNote(true);
-      const fetchedNote = await getNoteByDate(parsedDate);
+      try {
+        setIsFetchingNote(true);
 
-      if (fetchedNote) {
-        setNote(fetchedNote);
-      } else {
-        const addedNodeDoc = await addNote(parsedDate);
-        setNote(addedNodeDoc);
+        const fetchedNote = await getNoteByDate(parsedDate);
+        if (fetchedNote) {
+          setNote(fetchedNote);
+        } else {
+          const addedNodeDoc = await addNote(parsedDate);
+          setNote(addedNodeDoc);
+        }
+        setIsFetchingNote(false);
+      } catch (err) {
+        setFetchingError(err);
+        setIsFetchingNote(false);
       }
-      setIsFetchingNote(false);
     };
 
     doFetchNote();
@@ -92,12 +98,15 @@ function DailyNotes() {
               </Link>
             )}
           </div>
-
-          <TextEditor
-            html={note ? note.content : ''}
-            setHtml={onUpdateHtml}
-            isFetching={isFetchingNote}
-          />
+          {fetchingError ? (
+            <div className={styles['error-container']}>Error fetching note</div>
+          ) : (
+            <TextEditor
+              html={note ? note.content : ''}
+              setHtml={onUpdateHtml}
+              isFetching={isFetchingNote}
+            />
+          )}
         </div>
       </div>
     );

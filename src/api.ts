@@ -36,10 +36,14 @@ export async function getNotesForMonth(month: string, year: string) {
 }
 
 export async function getNoteByDate(date: Date): Promise<Note | null> {
-  const { data: notes } = await supabase
+  const { data: notes, error } = await supabase
     .from('notes')
     .select()
     .eq('date', date.toISOString());
+
+  if (error !== null) {
+    throw error;
+  }
 
   if (notes === null) {
     return null;
@@ -49,10 +53,14 @@ export async function getNoteByDate(date: Date): Promise<Note | null> {
 }
 
 export async function addNote(date: Date): Promise<Note | null> {
-  const { data: notes } = await supabase
+  const { data: notes, error } = await supabase
     .from('notes')
     .insert({ date: date.toISOString(), content: '' })
     .select();
+
+  if (error !== null) {
+    throw error;
+  }
 
   if (notes === null) {
     return null;
