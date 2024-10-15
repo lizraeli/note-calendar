@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getNotesForMonth } from './api';
 
-type NotesCalendar = Record<string, string>;
+type DateString = string;
+type NotesCalendar = Record<DateString, string>;
 
 export function useNotesForMonth(month?: string, year?: string) {
-  // const [notes, setNotes] = useState<Note[] | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
   const [notesCalendar, setNotesCalendar] = useState<NotesCalendar | null>(
     null
   );
@@ -16,14 +17,19 @@ export function useNotesForMonth(month?: string, year?: string) {
 
     const doGetNotes = async () => {
       try {
+        setIsFetching(true);
         const fetchedNotes = await getNotesForMonth(month, year);
 
-        const calendar: NotesCalendar = {};
-        for (const note of fetchedNotes) {
-          calendar[note.date] = note.content;
-        }
+        const calendar = fetchedNotes.reduce(
+          (calendar, note) => ({
+            ...calendar,
+            [note.date]: note.content,
+          }),
+          {} as NotesCalendar
+        );
 
         setNotesCalendar(calendar);
+        setIsFetching(false);
       } catch {
         console.log('error fetching notes');
       }
@@ -32,5 +38,5 @@ export function useNotesForMonth(month?: string, year?: string) {
     doGetNotes();
   }, [month, year]);
 
-  return notesCalendar;
+  return { notesCalendar, isFetching };
 }

@@ -25,7 +25,7 @@ function MonthView() {
   const { year: yearParam, month: monthParam } = useParams();
 
   const todayElemRef = useRef<HTMLDivElement>(null);
-  const notesCalendar = useNotesForMonth(monthParam, yearParam);
+  const { notesCalendar, isFetching } = useNotesForMonth(monthParam, yearParam);
 
   const navigate = useNavigate();
 
@@ -87,9 +87,13 @@ function MonthView() {
                     );
                   }
 
-                  const html = notesCalendar[dateToString(day)] || '...';
+                  const html = isFetching
+                    ? ''
+                    : notesCalendar[dateToString(day)] || '...';
                   const isDayToday = isToday(day);
-                  const className = isDayToday
+                  const className = isFetching
+                    ? styles['loading-cell']
+                    : isDayToday
                     ? styles['today-cell']
                     : styles['day-cell'];
 

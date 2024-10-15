@@ -3,7 +3,9 @@ import { useMemo } from 'react';
 import styles from './styles.module.css';
 import { dateFormatterShort } from '../../utils';
 
-function DailyNotesPreview({ html, date }: { html: string; date: Date }) {
+type Props = { html: string; date: Date };
+
+function DailyNotesPreview({ html, date }: Props) {
   const sanitizedHTML = useMemo(() => DOMPurify.sanitize(html), [html]);
 
   const title = dateFormatterShort.format(date);

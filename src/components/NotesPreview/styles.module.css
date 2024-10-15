@@ -4,6 +4,11 @@
   gap: 5px;
 }
 
+.fetching {
+  opacity: 0;
+  background-color: blue;
+}
+
 .date {
   font-size: 12px;
   font-size: clamp(10px, 2vw, 14px);
