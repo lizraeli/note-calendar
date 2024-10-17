@@ -34,7 +34,7 @@ function MonthView() {
     const year = Number(yearParam);
 
     if (!notesCalendar || Number.isNaN(year) || Number.isNaN(month)) {
-      return <Spinner />;
+      return <Spinner fullPage />;
     }
 
     const daysInMonth = getDaysInMonth(month, year);
@@ -102,7 +102,11 @@ function MonthView() {
                       key={day.getTime()}
                       className={className}
                       ref={isDayToday ? todayElemRef : null}
-                      onClick={() => navigate(`../../day/${dateToString(day)}`)}
+                      onClick={() =>
+                        navigate(`../../day/${dateToString(day)}`, {
+                          unstable_viewTransition: true,
+                        })
+                      }
                     >
                       <DailyNotesPreview
                         key={day.getTime()}

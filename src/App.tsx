@@ -14,7 +14,7 @@ function App() {
     navigate(`/year/${year}/month/${month}`);
   }, [navigate]);
 
-  return <Spinner />;
+  return <Spinner fullPage />;
 }
 
 export default App;

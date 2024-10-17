@@ -66,7 +66,7 @@ function DailyNotes() {
 
   const content = () => {
     if (!parsedDate) {
-      return <Spinner />;
+      return <Spinner fullPage />;
     }
 
     return (
@@ -75,7 +75,7 @@ function DailyNotes() {
           <div className={styles['header']}>
             <a
               className={styles['all-notes-link']}
-              onClick={() => navigate('..')}
+              onClick={() => navigate('..', { unstable_viewTransition: true })}
             >
               <button className="home-btn">
                 <HomeIcon />
