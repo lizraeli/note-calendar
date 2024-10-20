@@ -4,12 +4,12 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "icons/calendar-256x256.png",
+      "src": "calendar-256x256.png",
       "type": "image/png",
       "sizes": "256x256"
     },
     {
-      "src": "icons/calendar-512x512.png",
+      "src": "calendar-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
