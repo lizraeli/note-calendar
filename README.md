@@ -59,7 +59,7 @@ You can access the app at `http://localhost:5173`.
 
 - Edit and save notes for each day
 - View notes in a monthly calendar layout
-- User authentication using Supabase
+- User authentication and database using Supabase
 - Responsive design with CSS Modules
 - Text editing with TipTap
 
@@ -69,13 +69,13 @@ You can access the app at `http://localhost:5173`.
   - [Vite](https://vitejs.dev/) - Build tool
   - [TypeScript](https://www.typescriptlang.org/) - For static type checking
   - [React](https://reactjs.org/) - Frontend library
-  - [SupabaseJS](https://supabase.com/docs/reference/javascript) - Client for connecting to Supabase
+  - [supabase-js](https://supabase.com/docs/reference/javascript) - Client for connecting to Supabase
   - [TipTap](https://tiptap.dev/) - Rich text editor
   - [CSS Modules](https://github.com/css-modules/css-modules) - For modular and reusable styles
   - [PostCSS Preset Env](https://preset-env.cssdb.org/) - Converts modern CSS into something most browsers can understand
 
 - **Backend:**
-  - Supabase - Database and authentication service
+  - [Supabase](https://github.com/supabase/supabase) - Database and authentication service. See [supabase.sql](supabase.sql) for database schema.
 
 ## Contributing
 
