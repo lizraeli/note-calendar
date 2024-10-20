@@ -47,6 +47,10 @@
     background-color: #f9f2f2;
   }
 
+  .control-group .button-group button svg {
+    width: clamp(18px, 2vw, 24px);
+    height: clamp(18px, 2vw, 24px);
+  }
   .control-group .button-group button.is-active {
     background-color: #e8e3f1;
   }
@@ -69,8 +73,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 1vw;
+  padding-right: 1vw;
   padding-top: 10px;
   padding-bottom: 40px;
 

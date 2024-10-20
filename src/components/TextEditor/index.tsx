@@ -108,7 +108,6 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
-  // TextStyle.configure({ types: [ListItem.name] }),
   StarterKit.configure({
     bulletList: {
       keepMarks: true,
@@ -122,7 +121,6 @@ const extensions = [
   Link.configure({
     openOnClick: true,
     autolink: true,
-    // defaultProtocol: 'https',
   }),
 ];
 
