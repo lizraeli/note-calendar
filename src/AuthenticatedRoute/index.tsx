@@ -6,13 +6,14 @@ import useSession from '../supabase/useSession';
 import supabase, { supabaseRedirectUrl } from '../supabase';
 import Header from '../components/Header';
 import styles from './styles.module.css';
+import Spinner from '../components/Spinner';
 
 type Props = {
   component: ComponentType<{ user: User }>;
 };
 
 export const AuthenticatedRoute = ({ component }: Props) => {
-  const session = useSession();
+  const { session, isFetchingSession } = useSession();
 
   const signInAnonymously = async () => {
     const { error } = await supabase.auth.signInAnonymously();
@@ -21,6 +22,10 @@ export const AuthenticatedRoute = ({ component }: Props) => {
       console.error('error signing in anonymously');
     }
   };
+
+  if (isFetchingSession) {
+    return <Spinner fullPage />;
+  }
 
   if (!session) {
     return (

@@ -4,11 +4,17 @@ import supabase from '.';
 
 export default function useSession() {
   const [session, setSession] = useState<Session | null>(null);
+  const [isFetchingSession, setIsFecthingSession] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
+    const fetchSession = async () => {
+      setIsFecthingSession(true);
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session);
+      setIsFecthingSession(false);
+    };
+
+    fetchSession();
 
     const {
       data: { subscription },
@@ -19,5 +25,5 @@ export default function useSession() {
     return () => subscription.unsubscribe();
   }, []);
 
-  return session;
+  return { session, isFetchingSession };
 }
