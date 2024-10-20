@@ -25,7 +25,7 @@ export const AuthenticatedRoute = ({ component }: Props) => {
   if (!session) {
     return (
       <div className={styles.container}>
-        <div className="title">Notes App</div>
+        <div className={styles.title}>Notes App</div>
 
         <div className={styles['sub-container']}>
           <div className="sub-title">Sign in or sign up to continue.</div>
