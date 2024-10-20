@@ -70,7 +70,10 @@ function DailyNotes() {
     }
 
     return (
-      <div className={styles['daily-note-container']}>
+      <div
+        className={styles['daily-note-container']}
+        style={{ viewTransitionName: 'day' }}
+      >
         <div className={styles['editing-container']}>
           <div className={styles['header']}>
             <a

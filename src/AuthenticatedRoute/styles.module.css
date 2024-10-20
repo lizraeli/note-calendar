@@ -26,11 +26,6 @@
   }
 }
 
-.title {
-  margin-top: 2rem;
-  font-size: 24px;
-}
-
 :global(#auth-sign-in),
 :global(#auth-sign-up),
 :global(#auth-forgot-password) {

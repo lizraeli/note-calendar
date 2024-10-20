@@ -1,7 +1,11 @@
-import { useRef } from 'react';
 import DailyNotesPreview from '../../components/NotesPreview';
 import { format } from 'date-fns/format';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import {
+  useNavigate,
+  useParams,
+  Link,
+  unstable_useViewTransitionState,
+} from 'react-router-dom';
 import { addMonths, isToday, subMonths } from 'date-fns';
 import { useNotesForMonth } from '../../hooks';
 import { getDaysInMonth } from '../../utils';
@@ -23,108 +27,138 @@ const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 function MonthView() {
   const { year: yearParam, month: monthParam } = useParams();
-
-  const todayElemRef = useRef<HTMLDivElement>(null);
   const { notesCalendar, isFetching } = useNotesForMonth(monthParam, yearParam);
 
-  const navigate = useNavigate();
+  const month = Number(monthParam);
+  const year = Number(yearParam);
 
-  const content = () => {
-    const month = Number(monthParam);
-    const year = Number(yearParam);
+  const daysInMonth = getDaysInMonth(month, year);
+  const firstDay = daysInMonth[0];
 
-    if (!notesCalendar || Number.isNaN(year) || Number.isNaN(month)) {
-      return <Spinner fullPage />;
-    }
+  const dayOfWeeks = firstDay.getDay();
 
-    const daysInMonth = getDaysInMonth(month, year);
-    const firstDay = daysInMonth[0];
+  const daysAndEmptySpaces = [
+    ...Array.from({ length: dayOfWeeks }, () => null),
+    ...daysInMonth,
+  ];
 
-    const dayOfWeeks = firstDay.getDay();
+  const prevMonth = subMonths(firstDay, 1);
+  const prevMonthUrl = `/year/${prevMonth.getFullYear()}/month/${
+    prevMonth.getMonth() + 1
+  }`;
 
-    const daysAndEmptySpaces = [
-      ...Array.from({ length: dayOfWeeks }, () => null),
-      ...daysInMonth,
-    ];
+  const nextMonth = addMonths(firstDay, 1);
+  const nextMonthUrl = `/year/${nextMonth.getFullYear()}/month/${
+    nextMonth.getMonth() + 1
+  }`;
 
-    const prevMonth = subMonths(firstDay, 1);
-    const prevMonthUrl = `/year/${prevMonth.getFullYear()}/month/${
-      prevMonth.getMonth() + 1
-    }`;
+  const isTransitioningToPrevMonth =
+    unstable_useViewTransitionState(prevMonthUrl);
 
-    const nextMonth = addMonths(firstDay, 1);
-    const nextMonthUrl = `/year/${nextMonth.getFullYear()}/month/${
-      nextMonth.getMonth() + 1
-    }`;
+  const isTransitioningToNextMonth =
+    unstable_useViewTransitionState(nextMonthUrl);
 
-    return (
-      <div className={styles['calendar']}>
-        <div className={styles['container']}>
-          <div className={styles['month']}>
-            <div className={styles['month-controls']}>
-              <Link to={prevMonthUrl}>
-                <LeftArrowIcon />
-              </Link>
-              <div className={styles['month-name']}>
-                {monthAndYearDisplay(firstDay)}
-              </div>
-              <Link to={nextMonthUrl}>
-                <RightArrowIcon />
-              </Link>
+  if (!notesCalendar || Number.isNaN(year) || Number.isNaN(month)) {
+    return <Spinner fullPage />;
+  }
+
+  return (
+    <div className={styles['calendar']}>
+      <div className={styles['container']}>
+        <div className={styles['month']}>
+          <div className={styles['month-controls']}>
+            <Link to={prevMonthUrl} unstable_viewTransition>
+              <LeftArrowIcon />
+            </Link>
+            <div className={styles['month-name']}>
+              {monthAndYearDisplay(firstDay)}
             </div>
-            <div className={styles['days-in-month-container']}>
-              <div className={styles['days-in-month']}>
-                {daysOfTheWeek.map((dayName) => (
-                  <div key={dayName} className={styles['day-name-cell']}>
-                    {dayName}
-                  </div>
-                ))}
+            <Link to={nextMonthUrl} unstable_viewTransition>
+              <RightArrowIcon />
+            </Link>
+          </div>
+          <div
+            className={styles['days-in-month-container']}
+            style={{
+              viewTransitionName: isTransitioningToPrevMonth
+                ? 'prev-month'
+                : isTransitioningToNextMonth
+                ? 'next-month'
+                : '',
+            }}
+          >
+            <div className={styles['days-in-month']}>
+              {daysOfTheWeek.map((dayName) => (
+                <div key={dayName} className={styles['day-name-cell']}>
+                  {dayName}
+                </div>
+              ))}
 
-                {daysAndEmptySpaces.map((day, index) => {
-                  if (day === null) {
-                    return (
-                      <div key={index} className={styles['empty-cell']}></div>
-                    );
-                  }
-
-                  const html = isFetching
-                    ? ''
-                    : notesCalendar[dateToString(day)] || '...';
-                  const isDayToday = isToday(day);
-                  const className = isFetching
-                    ? styles['loading-cell']
-                    : isDayToday
-                    ? styles['today-cell']
-                    : styles['day-cell'];
-
+              {daysAndEmptySpaces.map((day, index) => {
+                if (day === null) {
                   return (
-                    <div
-                      key={day.getTime()}
-                      className={className}
-                      ref={isDayToday ? todayElemRef : null}
-                      onClick={() =>
-                        navigate(`../../day/${dateToString(day)}`, {
-                          unstable_viewTransition: true,
-                        })
-                      }
-                    >
-                      <DailyNotesPreview
-                        key={day.getTime()}
-                        html={html}
-                        date={day}
-                      />
-                    </div>
+                    <div key={index} className={styles['empty-cell']}></div>
                   );
-                })}
-              </div>
+                }
+
+                const html = isFetching
+                  ? ''
+                  : notesCalendar[dateToString(day)] || '...';
+
+                return (
+                  <DayCell
+                    key={day.toISOString()}
+                    day={day}
+                    isFetching={isFetching}
+                    html={html}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
-    );
-  };
-
-  return <>{content()}</>;
+    </div>
+  );
 }
+
+const DayCell = ({
+  day,
+  isFetching,
+  html,
+}: {
+  day: Date;
+  isFetching: boolean;
+  html: string;
+}) => {
+  const navigate = useNavigate();
+
+  const dayRoute = `../../day/${dateToString(day)}`;
+  const isTransitioningToDay = unstable_useViewTransitionState(dayRoute);
+
+  const isDayToday = isToday(day);
+  const className = isFetching
+    ? styles['loading-cell']
+    : isDayToday
+    ? styles['today-cell']
+    : styles['day-cell'];
+
+  return (
+    <div
+      key={day.getTime()}
+      className={className}
+      style={{
+        viewTransitionName: isTransitioningToDay ? 'day' : '',
+      }}
+      onClick={() =>
+        navigate(dayRoute, {
+          unstable_viewTransition: true,
+        })
+      }
+    >
+      <DailyNotesPreview key={day.getTime()} html={html} date={day} />
+    </div>
+  );
+};
 
 export default MonthView;

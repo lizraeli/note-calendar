@@ -22,7 +22,6 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  /* min-width: 320px; */
   min-height: 100vh;
 }
 
@@ -54,4 +53,116 @@ button:focus-visible {
   margin: 0 auto;
   font-family: 'Lato', sans-serif;
   height: 100vh;
+  /* width: 100vw; */
+  /* overflow: hidden; */
+}
+
+@keyframes slide-out-to-the-right {
+  0% {
+    transform: translateX(0%);
+    opacity: 0.25;
+  }
+
+  100% {
+    transform: translateX(50%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-from-the-left {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide-out-to-the-left {
+  0% {
+    transform: translateX(0%);
+    opacity: 0.25;
+  }
+
+  100% {
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-from-the-right {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes expand {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes expand-from-center {
+  from {
+    transform: scale(0.5);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes dissapear {
+  from {
+    opacity: 0.25;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* Apply the custom animation to the old and new page states */
+
+::view-transition-old(prev-month) {
+  animation: 0.25s linear both slide-out-to-the-right;
+}
+
+::view-transition-new(prev-month) {
+  animation: 0.5s ease-out both slide-in-from-the-right;
+}
+
+::view-transition-old(next-month) {
+  animation: 0.25s linear both slide-out-to-the-left;
+}
+
+::view-transition-new(next-month) {
+  animation: 0.5s ease-out both slide-in-from-the-left;
+}
+
+::view-transition-old(day) {
+  visibility: hidden;
+}
+
+::view-transition-new(day) {
+  animation: 0.1s ease forwards expand-from-center;
 }
