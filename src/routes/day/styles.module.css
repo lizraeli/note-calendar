@@ -27,44 +27,21 @@
   background-color: #f9f2f2;
 }
 
-.editing {
+.header {
   display: flex;
-  flex-direction: column;
-
-  margin-top: 50px;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0.5px 1px 0px #701b1b;
-  background-color: #f9f2f2;
-
-  .control-group .button-group {
-    display: flex;
-    gap: 5px;
-    padding-bottom: 5px;
-  }
-
-  .control-group .button-group button {
-    background-color: #f9f2f2;
-  }
-
-  .control-group .button-group button svg {
-    width: clamp(18px, 2vw, 24px);
-    height: clamp(18px, 2vw, 24px);
-  }
-  .control-group .button-group button.is-active {
-    background-color: #e8e3f1;
-  }
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.editing-container {
-  .header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
+.header::after {
+  content: '';
+  flex: 1;
+}
 
-  .all-notes-btn {
-    border: none;
+.all-notes-link {
+  flex: 1;
+  button {
+    padding: 8px;
   }
 }
 
@@ -75,7 +52,7 @@
   justify-content: space-between;
   padding-left: 1vw;
   padding-right: 1vw;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-bottom: 40px;
 
   a {
@@ -90,13 +67,7 @@
   }
 }
 
-.daily-notes-title {
-  display: flex;
-  justify-content: center;
-  font-size: clamp(14px, 4vw, 18px);
+.date {
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
-}
-
-.all-notes-link button {
-  padding: 8px;
 }

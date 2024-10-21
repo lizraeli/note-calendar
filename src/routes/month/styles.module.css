@@ -152,4 +152,11 @@
   .day-cell {
     padding: 5px;
   }
+
+  .month-controls {
+    top: 80px;
+  }
+  .days-in-month-container {
+    margin-top: 40px;
+  }
 }

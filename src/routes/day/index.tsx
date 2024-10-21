@@ -92,7 +92,7 @@ function DailyNotes() {
                 <LeftArrowIcon title="right-arrow-large" />
               </Link>
             )}
-            <div className={styles['daily-notes-title']}>
+            <div className={styles.date}>
               Daily notes for {dateFormatterLong.format(parsedDate)}
             </div>
             {nextDayUrl && (

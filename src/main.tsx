@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     element: <AuthenticatedRoute component={DailyNotes} />,
   },
   {
-    path: '/year/:year/month/:month',
+    path: '/year/:year/month/:month/*',
     element: <AuthenticatedRoute component={MonthView} />,
   },
 ]);

@@ -16,7 +16,7 @@ import styles from './styles.module.css';
 
 function monthAndYearDisplay(date: Date) {
   const monthName = date.toLocaleString('default', { month: 'long' });
-  return `${monthName}, ${date.getFullYear()}`;
+  return `${monthName} ${date.getFullYear()}`;
 }
 
 function dateToString(date: Date) {
