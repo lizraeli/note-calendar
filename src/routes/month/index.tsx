@@ -6,7 +6,7 @@ import {
   Link,
   unstable_useViewTransitionState,
 } from 'react-router-dom';
-import { addMonths, isToday, subMonths } from 'date-fns';
+import { addMonths, isSameDay, isToday, subMonths } from 'date-fns';
 import { useNotesForMonth } from '../../hooks';
 import { getDaysInMonth } from '../../utils';
 import Spinner from '../../components/Spinner';
@@ -25,12 +25,32 @@ function dateToString(date: Date) {
 
 const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-function MonthView() {
-  const { year: yearParam, month: monthParam } = useParams();
-  const { notesCalendar, isFetching } = useNotesForMonth(monthParam, yearParam);
+function calcSelectedDate({
+  year,
+  month,
+  dayParam,
+}: {
+  year: number;
+  month: number;
+  dayParam?: string;
+}) {
+  if (!dayParam) {
+    return null;
+  }
 
-  const month = Number(monthParam);
+  const day = Number(dayParam);
+  if (Number.isNaN(day)) {
+    return null;
+  }
+
+  return new Date(year, month - 1, day);
+}
+
+function MonthView() {
+  const { year: yearParam, month: monthParam, day: dayParam } = useParams();
+  const { notesCalendar, isFetching } = useNotesForMonth(monthParam, yearParam);
   const year = Number(yearParam);
+  const month = Number(monthParam);
 
   const daysInMonth = getDaysInMonth(month, year);
   const firstDay = daysInMonth[0];
@@ -62,6 +82,9 @@ function MonthView() {
     return <Spinner fullPage />;
   }
 
+  const selectedDate = calcSelectedDate({ year, month, dayParam });
+
+  console.log('selectedDate: ', selectedDate);
   return (
     <div className={styles['calendar']}>
       <div className={styles['container']}>
@@ -94,8 +117,8 @@ function MonthView() {
                 </div>
               ))}
 
-              {daysAndEmptySpaces.map((day, index) => {
-                if (day === null) {
+              {daysAndEmptySpaces.map((date, index) => {
+                if (date === null) {
                   return (
                     <div key={index} className={styles['empty-cell']}></div>
                   );
@@ -103,14 +126,15 @@ function MonthView() {
 
                 const html = isFetching
                   ? ''
-                  : notesCalendar[dateToString(day)] || '...';
+                  : notesCalendar[dateToString(date)] || '...';
 
                 return (
                   <DayCell
-                    key={day.toISOString()}
-                    day={day}
+                    key={date.toISOString()}
+                    date={date}
                     isFetching={isFetching}
                     html={html}
+                    isSelected={!!selectedDate && isSameDay(date, selectedDate)}
                   />
                 );
               })}
@@ -123,40 +147,59 @@ function MonthView() {
 }
 
 const DayCell = ({
-  day,
+  date,
   isFetching,
   html,
+  isSelected,
 }: {
-  day: Date;
+  date: Date;
   isFetching: boolean;
   html: string;
+  isSelected: boolean;
 }) => {
   const navigate = useNavigate();
 
-  const dayRoute = `../../day/${dateToString(day)}`;
-  const isTransitioningToDay = unstable_useViewTransitionState(dayRoute);
+  const selectRoute = `/year/${date.getFullYear()}/month/${
+    date.getMonth() + 1
+  }/day/${date.getDate()}`;
+  const editRoute = `../../day/${dateToString(date)}`;
+  const isTransitioningToDay = unstable_useViewTransitionState(editRoute);
 
-  const isDayToday = isToday(day);
+  const isDayToday = isToday(date);
   const className = isFetching
     ? styles['loading-cell']
+    : isSelected
+    ? styles['selected-day-cell']
     : isDayToday
     ? styles['today-cell']
     : styles['day-cell'];
 
+  if (isSelected) {
+    console.log('selected: ', date);
+  }
+
+  const onClick = () => {
+    if (!isSelected) {
+      navigate(selectRoute);
+    }
+  };
+
   return (
     <div
-      key={day.getTime()}
+      key={date.getTime()}
       className={className}
       style={{
         viewTransitionName: isTransitioningToDay ? 'day' : '',
       }}
-      onClick={() =>
-        navigate(dayRoute, {
-          unstable_viewTransition: true,
-        })
-      }
+      onClick={onClick}
     >
-      <DailyNotesPreview key={day.getTime()} html={html} date={day} />
+      <DailyNotesPreview
+        key={date.getTime()}
+        html={html}
+        date={date}
+        isSelected={isSelected}
+        editUrl={editRoute}
+      />
     </div>
   );
 };
