@@ -116,14 +116,14 @@
 .day-cell.selected {
   position: absolute;
   transform: translate(-20%, -20%);
-  /* top: 100%; */
-  /* left: 50%;
-  top: 50%; */
-  width: clamp(50px, 15vw, 200px);
-  height: clamp(50px, 20vw, 250px);
+
+  width: clamp(50px, 15vw, 150px);
+  height: clamp(50px, 20vw, 200px);
   transition: all 0.5s;
   z-index: 10;
-  opacity: 0.96;
+  /* background-color: #dfa9a9; */
+  box-shadow: 1px 1px 1px hsl(0deg 0% 0% / 0.1);
+
   cursor: initial;
 }
 
