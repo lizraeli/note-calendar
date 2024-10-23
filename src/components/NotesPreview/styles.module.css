@@ -55,7 +55,7 @@
 
 .html-selected {
   composes: html;
-  /* height: clamp(50px, 14vw, 200px); */
+  height: clamp(50px, 14vw, 200px);
 }
 
 @media (max-width: 800px) {

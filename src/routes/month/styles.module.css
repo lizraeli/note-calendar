@@ -67,6 +67,7 @@
 }
 
 .days-in-month {
+  position: relative;
   margin-bottom: 50px;
   display: grid;
   grid-template-columns: repeat(7, minmax(20px, 100px));
@@ -112,7 +113,21 @@
   overflow: hidden;
 }
 
-.day-cell:hover {
+.day-cell.selected {
+  position: absolute;
+  transform: translate(-20%, -0%);
+  /* top: 100%; */
+  /* left: 50%;
+  top: 50%; */
+  width: clamp(50px, 15vw, 200px);
+  height: clamp(50px, 20vw, 250px);
+  transition: all 0.5s;
+  z-index: 10;
+  opacity: 0.95;
+  cursor: initial;
+}
+
+.day-cell:not(.selected):hover {
   background: #ffc627;
 }
 
@@ -122,29 +137,54 @@
   font-size: 14px;
 }
 
+@keyframes day-selected {
+  0% {
+    top: 0;
+    left: 0;
+    transform: initial;
+  }
+
+  50% {
+    top: 50%;
+    left: 50%;
+  }
+
+  100% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* transform: translate(-50%, -50%); */
+  }
+}
+
 .selected-day-cell {
   composes: cell;
-  position: static;
+  position: relative;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 1px 1px 0px hsl(0deg 0% 0% / 0.1);
   background-color: #f9f2f2;
   overflow: hidden;
-
-  /* height: clamp(50px, 10vw, 100px); */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* transition: top 1s; */
   /* width: calc(125%); */
   /* height: calc(110%); */
   /* /* width: calc(100%); */
-  /* transform: scale(1, 1.5); */
-  transform: translate(-20%, -20%);
-  width: clamp(50px, 18vw, 200px);
+  /* width: 40%;
+  height: 60%; */
+  width: clamp(50px, 15vw, 200px);
+  height: clamp(50px, 20vw, 250px);
+  /* transform: translate(-25%, -25%); */
+  /* transition: position 1s; */
   /* height: clamp(50px, 20vw, 200px); */
-
-  transition-property: all;
-  transition-duration: 250ms;
-  transition-timing-function: ease-out;
+  /* animation: day-selected 2s; */
+  /* transition-property: transform;
+  transition-duration: 1000ms;
+  transition-timing-function: ease-out; */
   z-index: 10;
-  overflow: hidden;
 }
 
 .day-controls {

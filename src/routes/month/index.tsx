@@ -13,6 +13,7 @@ import Spinner from '../../components/Spinner';
 import LeftArrowIcon from '../../assets/arrow-left.svg?react';
 import RightArrowIcon from '../../assets/arrow-right.svg?react';
 import styles from './styles.module.css';
+import classNames from 'classnames';
 
 function monthAndYearDisplay(date: Date) {
   const monthName = date.toLocaleString('default', { month: 'long' });
@@ -185,23 +186,40 @@ const DayCell = ({
   };
 
   return (
-    <div
-      key={date.getTime()}
-      className={className}
-      style={{
-        viewTransitionName: isTransitioningToDay ? 'day' : '',
-      }}
-      onClick={onClick}
-    >
-      <DailyNotesPreview
-        key={date.getTime()}
-        html={html}
-        date={date}
-        isSelected={isSelected}
-        editUrl={editRoute}
-      />
+    <div style={{ position: 'relative' }}>
+      <div
+        className={classNames({
+          [styles['day-cell']]: true,
+          [styles['selected']]: isSelected,
+        })}
+        style={{
+          viewTransitionName: isTransitioningToDay ? 'day' : '',
+        }}
+        onClick={onClick}
+      >
+        <DailyNotesPreview
+          key={date.getTime()}
+          html={html}
+          date={date}
+          isSelected={isSelected}
+          editUrl={editRoute}
+        />
+      </div>
     </div>
   );
 };
+
+// return (
+//   <div className={className} onClick={onClick}>
+//     <DailyNotesPreview
+//       key={date.getTime()}
+//       html={html}
+//       date={date}
+//       isSelected={isSelected}
+//       editUrl={editRoute}
+//     />
+//   </div>
+// );
+// };
 
 export default MonthView;
