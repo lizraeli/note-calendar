@@ -87,14 +87,14 @@ function MonthView() {
 
   console.log('selectedDate: ', selectedDate);
   return (
-    <div className={styles['calendar']}>
-      <div className={styles['container']}>
-        <div className={styles['month']}>
-          <div className={styles['month-controls']}>
+    <div className={styles.calendar}>
+      <div className={styles.container}>
+        <div className={styles.month}>
+          <div className={styles.monthControls}>
             <Link to={prevMonthUrl} unstable_viewTransition>
               <LeftArrowIcon />
             </Link>
-            <div className={styles['month-name']}>
+            <div className={styles.monthName}>
               {monthAndYearDisplay(firstDay)}
             </div>
             <Link to={nextMonthUrl} unstable_viewTransition>
@@ -102,7 +102,7 @@ function MonthView() {
             </Link>
           </div>
           <div
-            className={styles['days-in-month-container']}
+            className={styles.daysInMonthContainer}
             style={{
               viewTransitionName: isTransitioningToPrevMonth
                 ? 'prev-month'
@@ -111,9 +111,9 @@ function MonthView() {
                 : '',
             }}
           >
-            <div className={styles['days-in-month']}>
+            <div className={styles.daysInMonth}>
               {daysOfTheWeek.map((dayName) => (
-                <div key={dayName} className={styles['day-name-cell']}>
+                <div key={dayName} className={styles['dayNameCell']}>
                   {dayName}
                 </div>
               ))}
@@ -121,7 +121,7 @@ function MonthView() {
               {daysAndEmptySpaces.map((date, index) => {
                 if (date === null) {
                   return (
-                    <div key={index} className={styles['empty-cell']}></div>
+                    <div key={index} className={styles['emptyCell']}></div>
                   );
                 }
 
@@ -168,13 +168,15 @@ const DayCell = ({
 
   const isDayToday = isToday(date);
   const className = isFetching
-    ? styles['loading-cell']
+    ? styles['loadingCell']
     : isSelected
-    ? styles['selected-day-cell']
+    ? styles['selectedDayCell']
     : isDayToday
-    ? styles['today-cell']
-    : styles['day-cell'];
+    ? styles['todayCell']
+    : styles['dayCell'];
 
+  const dayOfWeek = date.getDay();
+  const dayOfMonth = date.getDate();
   if (isSelected) {
     console.log('selected: ', date);
   }
@@ -189,8 +191,12 @@ const DayCell = ({
     <div style={{ position: 'relative' }}>
       <div
         className={classNames({
-          [styles['day-cell']]: true,
-          [styles['selected']]: isSelected,
+          [styles.dayCell]: true,
+          [styles.selected]: isSelected,
+          [styles.left]: dayOfWeek >= 3,
+          [styles.right]: dayOfWeek < 3,
+          [styles.down]: dayOfMonth <= 7,
+          [styles.up]: dayOfMonth > 7,
         })}
         style={{
           viewTransitionName: isTransitioningToDay ? 'day' : '',
