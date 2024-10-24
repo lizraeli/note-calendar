@@ -195,8 +195,7 @@ const DayCell = ({
           [styles.selected]: isSelected,
           [styles.left]: dayOfWeek >= 3,
           [styles.right]: dayOfWeek < 3,
-          [styles.down]: dayOfMonth <= 7,
-          [styles.up]: dayOfMonth > 7,
+          [styles.up]: true,
         })}
         style={{
           viewTransitionName: isTransitioningToDay ? 'day' : '',

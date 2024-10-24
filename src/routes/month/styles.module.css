@@ -124,19 +124,19 @@
 }
 
 .dayCell.left.up.selected {
-  transform: translate(-25%, -20%);
+  transform: translate(-20%, -20%);
 }
 
 .dayCell.right.up.selected {
-  transform: translate(25%, -20%);
+  transform: translate(20%, -20%);
 }
 
 .dayCell.left.down.selected {
-  transform: translate(-25%, 20%);
+  transform: translate(-20%, 20%);
 }
 
 .dayCell.right.down.selected {
-  transform: translate(25%, 20%);
+  transform: translate(20%, 20%);
 }
 
 .dayCell:not(.selected):hover {
