@@ -193,8 +193,8 @@ const DayCell = ({
         className={classNames({
           [styles.dayCell]: true,
           [styles.selected]: isSelected,
-          [styles.left]: dayOfWeek >= 3,
-          [styles.right]: dayOfWeek < 3,
+          [styles.left]: dayOfWeek === 6,
+          [styles.right]: dayOfWeek < 6,
           [styles.up]: true,
         })}
         style={{
