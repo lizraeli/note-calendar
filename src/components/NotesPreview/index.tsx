@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import { dateFormatterShort } from '../../utils';
 import { Link } from 'react-router-dom';
 import EditIcon from '../../assets/edit.svg?react';
+import classNames from 'classnames';
 
 type Props = { html: string; date: Date; isSelected: boolean; editUrl: string };
 
@@ -23,7 +24,10 @@ function DailyNotesPreview({ html, date, isSelected, editUrl }: Props) {
         )}
       </div>
       <div
-        className={isSelected ? styles['html-selected'] : styles.html}
+        className={classNames({
+          [styles.html]: true,
+          [styles.selected]: isSelected,
+        })}
         dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
       />
     </div>

@@ -176,9 +176,9 @@ const DayCell = ({
     : styles['dayCell'];
 
   const dayOfWeek = date.getDay();
-  const dayOfMonth = date.getDate();
   if (isSelected) {
     console.log('selected: ', date);
+    console.log('dayOfWeek: ', dayOfWeek);
   }
 
   const onClick = () => {
@@ -194,7 +194,8 @@ const DayCell = ({
           [styles.dayCell]: true,
           [styles.selected]: isSelected,
           [styles.left]: dayOfWeek === 6,
-          [styles.right]: dayOfWeek < 6,
+          [styles.straight]: dayOfWeek >= 1 && dayOfWeek <= 5,
+          [styles.right]: dayOfWeek === 0,
           [styles.up]: true,
         })}
         style={{

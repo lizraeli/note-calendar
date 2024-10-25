@@ -30,7 +30,7 @@
   height: clamp(50px, 7vw, 100px);
   margin: 0px;
   padding-left: 5px;
-  overflow: scroll;
+  overflow: hidden;
   ul {
     padding-left: 10px;
     margin-top: 0px;
@@ -53,8 +53,7 @@
   }
 }
 
-.html-selected {
-  composes: html;
+.html.selected {
   height: clamp(50px, 14vw, 200px);
 }
 

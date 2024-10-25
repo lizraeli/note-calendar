@@ -123,24 +123,22 @@
   transition: transform 0.5s, width 0.5s, height 0.5s;
 }
 
-.dayCell.left.up.selected {
+.dayCell.selected.left.up {
   transform: translate(-30%, -20%);
 }
 
-.dayCell.right.up.selected {
-  transform: translate(-5%, -20%);
+.dayCell.selected.straight.up {
+  transform: translate(-10%, -20%);
 }
 
-.dayCell.left.down.selected {
-  transform: translate(-20%, 20%);
+.dayCell.selected.right.up {
+  transform: translate(5%, -20%);
 }
 
-.dayCell.right.down.selected {
-  transform: translate(20%, 20%);
-}
-
-.dayCell:not(.selected):hover {
-  background: #ffc627;
+@media (hover: hover) {
+  .dayCell:not(.selected):hover {
+    background: #ffc627;
+  }
 }
 
 .todayCell {
