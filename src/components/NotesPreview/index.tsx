@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import styles from './styles.module.css';
 import { dateFormatterShort } from '../../utils';
 import { Link } from 'react-router-dom';
-import EditIcon from '../../assets/edit.svg?react';
+import EditIcon from '../../assets/edit.svg';
 import classNames from 'classnames';
 
 type Props = { html: string; date: Date; isSelected: boolean; editUrl: string };

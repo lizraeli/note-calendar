@@ -10,8 +10,8 @@ import { addMonths, isSameDay, isToday, subMonths } from 'date-fns';
 import { useNotesForMonth } from '../../hooks';
 import { getDaysInMonth } from '../../utils';
 import Spinner from '../../components/Spinner';
-import LeftArrowIcon from '../../assets/arrow-left.svg?react';
-import RightArrowIcon from '../../assets/arrow-right.svg?react';
+import LeftArrowIcon from '../../assets/arrow-left.svg';
+import RightArrowIcon from '../../assets/arrow-right.svg';
 import styles from './styles.module.css';
 import classNames from 'classnames';
 
@@ -92,13 +92,13 @@ function MonthView() {
         <div className={styles.month}>
           <div className={styles.monthControls}>
             <Link to={prevMonthUrl} unstable_viewTransition>
-              <LeftArrowIcon />
+              <LeftArrowIcon aria-label="left arrow" />
             </Link>
             <div className={styles.monthName}>
               {monthAndYearDisplay(firstDay)}
             </div>
             <Link to={nextMonthUrl} unstable_viewTransition>
-              <RightArrowIcon />
+              <RightArrowIcon aria-label="right arrow" />
             </Link>
           </div>
           <div
