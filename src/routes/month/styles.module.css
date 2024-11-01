@@ -118,11 +118,19 @@
   z-index: 10;
   box-shadow: 1px 1px 1px hsl(0deg 0% 0% / 0.1);
   cursor: initial;
-  width: clamp(60px, 15vw, 100px);
-  height: clamp(80px, 20vw, 150px);
-  transition: transform 0.5s, width 0.5s, height 0.5s;
+  /* width: clamp(60px, 40vw, 200px);
+  height: clamp(80px, 50vw, 300px); */
+  width: 50%;
+  height: 50%;
+  transition: transform 0.4s, width 0.4s, height 0.4s;
+  animation-name: day-selected;
+  animation-duration: 0.4s;
+  animation-timing-function: linear;
+  top: 20%;
+  left: 20%;
+  /* transform: translate(-30%, -20%); */
 }
-
+/* 
 .dayCell.selected.left.up {
   transform: translate(-30%, -20%);
 }
@@ -133,7 +141,7 @@
 
 .dayCell.selected.right.up {
   transform: translate(5%, -20%);
-}
+} */
 
 @media (hover: hover) {
   .dayCell:not(.selected):hover {
@@ -149,20 +157,15 @@
 
 @keyframes day-selected {
   0% {
-    top: 0;
-    left: 0;
-    transform: initial;
-  }
-
-  50% {
-    top: 50%;
-    left: 50%;
+    top: var(--from-top);
+    left: var(--from-left);
+    /* transform: initial; */
   }
 
   100% {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 20%;
+    left: 20%;
+    /* transform: translate(-50%, -50%); */
   }
 }
 

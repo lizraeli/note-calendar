@@ -14,6 +14,7 @@ import LeftArrowIcon from '../../assets/arrow-left.svg';
 import RightArrowIcon from '../../assets/arrow-right.svg';
 import styles from './styles.module.css';
 import classNames from 'classnames';
+import { useEffect, useRef } from 'react';
 
 function monthAndYearDisplay(date: Date) {
   const monthName = date.toLocaleString('default', { month: 'long' });
@@ -48,6 +49,7 @@ function calcSelectedDate({
 }
 
 function MonthView() {
+  const calendarRef = useRef<HTMLDivElement>(null);
   const { year: yearParam, month: monthParam, day: dayParam } = useParams();
   const { notesCalendar, isFetching } = useNotesForMonth(monthParam, yearParam);
   const year = Number(yearParam);
@@ -85,7 +87,6 @@ function MonthView() {
 
   const selectedDate = calcSelectedDate({ year, month, dayParam });
 
-  console.log('selectedDate: ', selectedDate);
   return (
     <div className={styles.calendar}>
       <div className={styles.container}>
@@ -103,6 +104,7 @@ function MonthView() {
           </div>
           <div
             className={styles.daysInMonthContainer}
+            ref={calendarRef}
             style={{
               viewTransitionName: isTransitioningToPrevMonth
                 ? 'prev-month'
@@ -136,6 +138,7 @@ function MonthView() {
                     isFetching={isFetching}
                     html={html}
                     isSelected={!!selectedDate && isSameDay(date, selectedDate)}
+                    calendarRef={calendarRef}
                   />
                 );
               })}
@@ -152,13 +155,16 @@ const DayCell = ({
   isFetching,
   html,
   isSelected,
+  calendarRef,
 }: {
   date: Date;
   isFetching: boolean;
   html: string;
   isSelected: boolean;
+  calendarRef: React.RefObject<HTMLDivElement>;
 }) => {
   const navigate = useNavigate();
+  const ref = useRef<HTMLDivElement>(null);
 
   const selectRoute = `/year/${date.getFullYear()}/month/${
     date.getMonth() + 1
@@ -181,25 +187,50 @@ const DayCell = ({
     console.log('dayOfWeek: ', dayOfWeek);
   }
 
+  let fromTop = '';
+  let fromLeft = '';
+  if (ref.current && calendarRef.current) {
+    console.log('setting from top and left');
+    const rect = ref.current.getBoundingClientRect();
+    const calendarRect = calendarRef.current.getBoundingClientRect();
+    console.log('rect: ', rect);
+    console.log('calendarRect: ', calendarRect);
+    fromTop = rect.top - calendarRect.top + 'px';
+    fromLeft = rect.left - calendarRect.left + 'px';
+    console.log('fromTop: ', fromTop);
+  }
+
   const onClick = () => {
     if (!isSelected) {
+      console.log('ref.current: ', ref.current);
+      // if (ref.current) {
+      //   console.log('setting from top and left');
+      //   const rect = ref.current.getBoundingClientRect();
+      //   console.log('rect: ', rect);
+      //   // ref.current.style.setProperty('--from-top', rect.top + 'px');
+      //   // ref.current.style.setProperty('--from-left', rect.left + 'px');
+      // }
       navigate(selectRoute);
     }
   };
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div>
       <div
+        ref={ref}
         className={classNames({
           [styles.dayCell]: true,
           [styles.selected]: isSelected,
-          [styles.left]: dayOfWeek === 6,
-          [styles.straight]: dayOfWeek >= 1 && dayOfWeek <= 5,
-          [styles.right]: dayOfWeek === 0,
-          [styles.up]: true,
+          // [styles.left]: dayOfWeek === 6,
+          // [styles.straight]: dayOfWeek >= 1 && dayOfWeek <= 5,
+          // [styles.right]: dayOfWeek === 0,
+          // [styles.up]: true,
         })}
         style={{
           viewTransitionName: isTransitioningToDay ? 'day' : '',
+          // @ts-expect-error custom css property
+          '--from-top': fromTop,
+          '--from-left': fromLeft,
         }}
         onClick={onClick}
       >
