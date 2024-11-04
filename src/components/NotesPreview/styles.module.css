@@ -54,7 +54,10 @@
 }
 
 .html.selected {
-  height: clamp(50px, 14vw, 200px);
+  height: clamp(80px, 20vw, 120px);
+  border: 0.5px solid #fafafa;
+  font-size: clamp(10px, 3vw, 14px);
+  overflow-y: auto;
 }
 
 @media (max-width: 800px) {

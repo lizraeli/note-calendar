@@ -167,19 +167,7 @@ const DayCell = ({
   const isTransitioningToDay = unstable_useViewTransitionState(editRoute);
 
   const isDayToday = isToday(date);
-  const className = isFetching
-    ? styles['loadingCell']
-    : isSelected
-    ? styles['selectedDayCell']
-    : isDayToday
-    ? styles['todayCell']
-    : styles['dayCell'];
-
   const dayOfWeek = date.getDay();
-  if (isSelected) {
-    console.log('selected: ', date);
-    console.log('dayOfWeek: ', dayOfWeek);
-  }
 
   const onClick = () => {
     if (!isSelected) {
@@ -190,13 +178,12 @@ const DayCell = ({
   return (
     <div style={{ position: 'relative' }}>
       <div
-        className={classNames({
-          [styles.dayCell]: true,
+        className={classNames(styles.dayCell, styles.up, {
+          [styles.today]: isDayToday,
           [styles.selected]: isSelected,
           [styles.left]: dayOfWeek === 6,
           [styles.straight]: dayOfWeek >= 1 && dayOfWeek <= 5,
           [styles.right]: dayOfWeek === 0,
-          [styles.up]: true,
         })}
         style={{
           viewTransitionName: isTransitioningToDay ? 'day' : '',

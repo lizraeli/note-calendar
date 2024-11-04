@@ -113,13 +113,17 @@
   overflow: hidden;
 }
 
+.dayCell.today {
+  border: 0.8px solid rgb(244, 147, 137);
+}
+
 .dayCell.selected {
   position: absolute;
   z-index: 10;
   box-shadow: 1px 1px 1px hsl(0deg 0% 0% / 0.1);
   cursor: initial;
-  width: clamp(60px, 15vw, 100px);
-  height: clamp(80px, 20vw, 150px);
+  width: clamp(60px, 22vw, 100px);
+  height: clamp(80px, 30vw, 140px);
   transition: transform 0.5s, width 0.5s, height 0.5s;
 }
 
@@ -197,7 +201,12 @@
   .monthControls {
     top: 80px;
   }
+
   .daysInMonthContainer {
     margin-top: 40px;
+  }
+
+  .dayCell.selected.left.up {
+    transform: translate(-50%, -20%);
   }
 }
