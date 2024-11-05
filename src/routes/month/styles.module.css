@@ -9,8 +9,16 @@
 
 .calendar .container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
+}
+
+.header {
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 60px;
+  display: flex;
 }
 
 .monthControls {
@@ -63,7 +71,6 @@
   align-items: center;
   justify-content: space-around;
   width: 100%;
-  padding-top: 50px;
 }
 
 .daysInMonth {
@@ -198,12 +205,12 @@
     padding: 5px;
   }
 
-  .monthControls {
-    top: 80px;
+  .header {
+    padding-top: 50px;
   }
 
-  .daysInMonthContainer {
-    margin-top: 40px;
+  .monthControls {
+    top: 80px;
   }
 
   .dayCell.selected.left.up {
