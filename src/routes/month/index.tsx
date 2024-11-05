@@ -15,6 +15,13 @@ import RightArrowIcon from '../../assets/arrow-right.svg';
 import styles from './styles.module.css';
 import classNames from 'classnames';
 
+function getTodayUrl() {
+  const date = new Date();
+  return `/year/${date.getFullYear()}/month/${
+    date.getMonth() + 1
+  }/day/${date.getDate()}`;
+}
+
 function monthAndYearDisplay(date: Date) {
   const monthName = date.toLocaleString('default', { month: 'long' });
   return `${monthName} ${date.getFullYear()}`;
@@ -84,12 +91,15 @@ function MonthView() {
   }
 
   const selectedDate = calcSelectedDate({ year, month, dayParam });
+  const todayUrl = getTodayUrl();
 
-  console.log('selectedDate: ', selectedDate);
   return (
     <div className={styles.calendar}>
       <div className={styles.container}>
         <div className={styles.month}>
+          <div className={styles.header}>
+            <Link to={todayUrl}>Today</Link>
+          </div>
           <div className={styles.monthControls}>
             <Link to={prevMonthUrl} unstable_viewTransition>
               <LeftArrowIcon aria-label="left arrow" />
@@ -149,7 +159,7 @@ function MonthView() {
 
 const DayCell = ({
   date,
-  isFetching,
+  // isFetching,
   html,
   isSelected,
 }: {
@@ -201,18 +211,5 @@ const DayCell = ({
     </div>
   );
 };
-
-// return (
-//   <div className={className} onClick={onClick}>
-//     <DailyNotesPreview
-//       key={date.getTime()}
-//       html={html}
-//       date={date}
-//       isSelected={isSelected}
-//       editUrl={editRoute}
-//     />
-//   </div>
-// );
-// };
 
 export default MonthView;
