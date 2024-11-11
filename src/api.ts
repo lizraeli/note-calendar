@@ -1,7 +1,7 @@
 import { Tables } from './supabase/types';
 import { stringMonthYearToDate } from './utils';
 import supabase from './supabase';
-import throttle from 'throttleit';
+import pDebounce from 'p-debounce';
 
 export type Note = Tables<'notes'>;
 
@@ -87,6 +87,6 @@ export async function updateNote(
 }
 
 /**
- * Calls updateNote no more than once at the end of each 3 second period
+ * Calls updateNote no more than once every 3 seconds
  */
-export const throttleUpdateNote = throttle(updateNote, 3000);
+export const debouncedUpdateNote = pDebounce(updateNote, 3000);

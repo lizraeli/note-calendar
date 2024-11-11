@@ -6,14 +6,21 @@ import TextEditor from '../../components/TextEditor';
 import HomeIcon from '../../assets/home.svg';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
 import RightArrowIcon from '../../assets/arrow-right.svg';
-import { addNote, getNoteByDate, Note, throttleUpdateNote } from '../../api';
+import { addNote, getNoteByDate, Note, debouncedUpdateNote } from '../../api';
 import Spinner from '../../components/Spinner';
 import styles from './styles.module.css';
+
+enum SaveState {
+  IDLE = 'IDLE',
+  SAVING = 'SAVING',
+  SAVED = 'SAVED',
+}
 
 function DailyNotes() {
   const navigate = useNavigate();
   const { date: urlDate } = useParams();
   const [note, setNote] = useState<Note | null>(null);
+  const [saveState, setSaveState] = useState<SaveState>(SaveState.IDLE);
   const [isFetchingNote, setIsFetchingNote] = useState(false);
   const [fetchingError, setFetchingError] = useState<unknown>(null);
   const parsedDate = useMemo(
@@ -58,7 +65,9 @@ function DailyNotes() {
     }
 
     const doUpdateNote = async () => {
-      await throttleUpdateNote(note, html);
+      setSaveState(SaveState.SAVING);
+      await debouncedUpdateNote(note, html);
+      setSaveState(SaveState.SAVED);
     };
 
     doUpdateNote();
@@ -76,14 +85,25 @@ function DailyNotes() {
       >
         <div className={styles['editing-container']}>
           <div className={styles['header']}>
-            <a
-              className={styles['all-notes-link']}
-              onClick={() => navigate('..', { unstable_viewTransition: true })}
-            >
-              <button className="home-btn">
-                <HomeIcon />
-              </button>
-            </a>
+            <div>
+              <a
+                className={styles['all-notes-link']}
+                onClick={() =>
+                  navigate('..', { unstable_viewTransition: true })
+                }
+              >
+                <button className="home-btn">
+                  <HomeIcon />
+                </button>
+              </a>
+            </div>
+            {saveState === SaveState.SAVING && (
+              <div className={styles.saveState}>Saving...</div>
+            )}
+
+            {saveState === SaveState.SAVED && (
+              <div className={styles.saveState}>All changes saved</div>
+            )}
           </div>
 
           <div className={styles['daily-note-controls']}>
@@ -101,6 +121,7 @@ function DailyNotes() {
               </Link>
             )}
           </div>
+
           {fetchingError ? (
             <div className={styles['error-container']}>Error fetching note</div>
           ) : (
