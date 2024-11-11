@@ -24,8 +24,7 @@ function DailyNotesPreview({ html, date, isSelected, editUrl }: Props) {
         )}
       </div>
       <div
-        className={classNames({
-          [styles.html]: true,
+        className={classNames(styles.html, {
           [styles.selected]: isSelected,
         })}
         dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
