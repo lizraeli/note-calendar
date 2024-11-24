@@ -159,7 +159,6 @@ function MonthView() {
 
 const DayCell = ({
   date,
-  // isFetching,
   html,
   isSelected,
 }: {
@@ -186,7 +185,7 @@ const DayCell = ({
   };
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div>
       <div
         className={classNames(styles.dayCell, styles.up, {
           [styles.today]: isDayToday,
