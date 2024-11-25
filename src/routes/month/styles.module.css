@@ -1,3 +1,15 @@
+:root {
+  --shadow-color: 0deg 0% 0%;
+  --shadow-elevation-low: 0.3px 0.5px 0.8px hsl(var(--shadow-color) / 0.02),
+    0.8px 1.7px 2.6px -0.6px hsl(var(--shadow-color) / 0.1);
+  --shadow-elevation-medium: 0.3px 0.5px 0.8px hsl(var(--shadow-color) / 0.03),
+    4.1px 8.3px 13.1px -0.6px hsl(var(--shadow-color) / 0.14);
+  --shadow-elevation-high: 0.3px 0.5px 0.8px hsl(var(--shadow-color) / 0.03),
+    3.2px 6.4px 10.1px -0.2px hsl(var(--shadow-color) / 0.08),
+    7.3px 14.7px 23.1px -0.4px hsl(var(--shadow-color) / 0.13),
+    16.3px 32.5px 51.3px -0.6px hsl(var(--shadow-color) / 0.18);
+}
+
 .calendar {
   display: flex;
   flex-direction: column;
@@ -85,10 +97,8 @@
 }
 
 .cell {
-  border: 1px solid;
   margin: 2px;
   align-items: center;
-  border-color: black;
   height: clamp(50px, 10vw, 100px);
   overflow: hidden;
 }
@@ -116,22 +126,24 @@
 
 .dayCell {
   composes: cell;
+  border: 1px solid rgb(173, 150, 150);
   cursor: pointer;
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 1px 1px 0px hsl(0deg 0% 0% / 0.1);
+  box-shadow: var(--shadow-elevation-low);
   background-color: #f9f2f2;
   overflow: hidden;
 }
 
 .dayCell.today {
-  border: 0.8px solid rgb(244, 147, 137);
+  border: 1px solid rgb(244, 147, 137);
 }
 
 .dayCell.selected {
+  border-width: 1.1px;
   position: absolute;
   z-index: 10;
-  box-shadow: 1px 1px 1px hsl(0deg 0% 0% / 0.1);
+  box-shadow: var(--shadow-elevation-high);
   cursor: initial;
   width: clamp(60px, 22vw, 100px);
   height: clamp(80px, 30vw, 140px);
