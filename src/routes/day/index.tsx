@@ -80,19 +80,19 @@ function DailyNotes() {
 
     return (
       <div
-        className={styles['daily-note-container']}
+        className={styles.dailyNoteContainer}
         style={{ viewTransitionName: 'day' }}
       >
-        <div className={styles['editing-container']}>
-          <div className={styles['header']}>
+        <div className={styles.editorContainer}>
+          <div className={styles.header}>
             <div>
               <a
-                className={styles['all-notes-link']}
+                className={styles.allNotesLink}
                 onClick={() =>
                   navigate('..', { unstable_viewTransition: true })
                 }
               >
-                <button className="home-btn">
+                <button>
                   <HomeIcon />
                 </button>
               </a>
@@ -106,7 +106,7 @@ function DailyNotes() {
             )}
           </div>
 
-          <div className={styles['daily-note-controls']}>
+          <div className={styles.dailyNoteControls}>
             {prevDayUrl && (
               <Link to={prevDayUrl}>
                 <LeftArrowIcon title="right-arrow-large" />
@@ -123,7 +123,7 @@ function DailyNotes() {
           </div>
 
           {fetchingError ? (
-            <div className={styles['error-container']}>Error fetching note</div>
+            <div className={styles['errorContainer']}>Error fetching note</div>
           ) : (
             <TextEditor
               html={note ? note.content : ''}

@@ -14,6 +14,7 @@ import LeftArrowIcon from '../../assets/arrow-left.svg';
 import RightArrowIcon from '../../assets/arrow-right.svg';
 import styles from './styles.module.css';
 import classNames from 'classnames';
+import { useEffect, useMemo, useRef } from 'react';
 
 function getTodayUrl() {
   const date = new Date();
@@ -86,11 +87,34 @@ function MonthView() {
   const isTransitioningToNextMonth =
     unstable_useViewTransitionState(nextMonthUrl);
 
+  const selectedDate = useMemo(
+    () => calcSelectedDate({ year, month, dayParam }),
+    [year, month, dayParam]
+  );
+
+  const todayDivRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isFetching || !selectedDate) {
+      return;
+    }
+
+    if (isToday(selectedDate)) {
+      // scroll to today's cell
+      if (todayDivRef.current) {
+        try {
+          todayDivRef.current.scrollIntoView({ behavior: 'smooth' });
+        } catch {
+          todayDivRef.current.scrollIntoView();
+        }
+      }
+    }
+  }, [selectedDate, isFetching]);
+
   if (!notesCalendar || Number.isNaN(year) || Number.isNaN(month)) {
     return <Spinner fullPage />;
   }
 
-  const selectedDate = calcSelectedDate({ year, month, dayParam });
   const todayUrl = getTodayUrl();
 
   return (
@@ -142,6 +166,7 @@ function MonthView() {
                 return (
                   <DayCell
                     key={date.toISOString()}
+                    divRef={isToday(date) ? todayDivRef : null}
                     date={date}
                     isFetching={isFetching}
                     html={html}
@@ -161,11 +186,13 @@ const DayCell = ({
   date,
   html,
   isSelected,
+  divRef,
 }: {
   date: Date;
   isFetching: boolean;
   html: string;
   isSelected: boolean;
+  divRef: React.Ref<HTMLDivElement> | null;
 }) => {
   const navigate = useNavigate();
 
@@ -185,7 +212,7 @@ const DayCell = ({
   };
 
   return (
-    <div>
+    <div ref={divRef}>
       <div
         className={classNames(styles.dayCell, styles.up, {
           [styles.today]: isDayToday,

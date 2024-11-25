@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference types="vite/client" />
 
 declare module '*.svg' {
-  const content: React.FC<React.SVGProps<SVGElement>>;
+  const content: React.FC<React.SVGProps<SVGElement> & { title?: string }>;
   export default content;
 }
 

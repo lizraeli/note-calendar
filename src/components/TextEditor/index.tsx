@@ -50,7 +50,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
 
   return (
     <div className="control-group">
-      <div className={styles['button-group']}>
+      <div className={styles.buttonGroup}>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}

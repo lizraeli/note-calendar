@@ -1,4 +1,4 @@
-.daily-note-container {
+.dailyNoteContainer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,14 +9,14 @@
   }
 }
 
-.error-container {
+.errorContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 200px;
 }
 
-.editing-container {
+.editorContainer {
   display: flex;
   flex-direction: column;
 
@@ -33,14 +33,14 @@
   align-items: center;
 }
 
-.all-notes-link {
+.allNotesLink {
   flex: 1;
   button {
     padding: 8px;
   }
 }
 
-.daily-note-controls {
+.dailyNoteControls {
   display: flex;
   flex-direction: row;
   align-items: center;
