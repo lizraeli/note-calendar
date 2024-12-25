@@ -1,11 +1,14 @@
 #header {
-  position: static;
-  padding: 2px 5px;
+  position: sticky;
+  top: 0;
+  background-color: #fefefe;
+  padding: 7px 5px;
+  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 14px;
-  z-index: 10;
+  z-index: 100;
   margin-bottom: 10px;
 }
 

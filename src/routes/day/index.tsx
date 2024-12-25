@@ -113,7 +113,7 @@ function DailyNotes() {
               </Link>
             )}
             <div className={styles.date}>
-              Daily notes for {dateFormatterLong.format(parsedDate)}
+              Notes for {dateFormatterLong.format(parsedDate)}
             </div>
             {nextDayUrl && (
               <Link to={nextDayUrl}>

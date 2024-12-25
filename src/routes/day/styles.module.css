@@ -29,8 +29,15 @@
 
 .header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .allNotesLink {
@@ -63,7 +70,7 @@
 }
 
 .date {
-  font-size: clamp(14px, 4vw, 16px);
+  font-size: clamp(14px, 3.5vw, 16px);
   font-weight: 600;
 }
 
@@ -71,4 +78,6 @@
   font-size: clamp(12px, 2vw, 14px);
 
   padding: 0 10px;
+  /* align-self: flex-end; */
+  justify-self: end;
 }

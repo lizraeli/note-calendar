@@ -18,11 +18,13 @@ export default function Header({ user }: Props) {
     }
   };
 
+  console.log('user: ', user);
+
   return (
     <div id={styles.header}>
-      <div>{user.is_anonymous ? 'anonymous' : user.email}</div>
+      <div>{user.is_anonymous ? 'Not signed in' : user.email}</div>
       <div id={styles.signOut} onClick={onSignOut}>
-        Sign out
+        {user.is_anonymous ? 'Sign in' : 'Sign out'}
       </div>
     </div>
   );

@@ -51,10 +51,8 @@ button:focus-visible {
 
 #root {
   margin: 0 auto;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Playpen Sans', serif;
   height: 100vh;
-  /* width: 100vw; */
-  /* overflow: hidden; */
 }
 
 @keyframes slide-out-to-the-right {

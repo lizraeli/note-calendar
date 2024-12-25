@@ -32,10 +32,8 @@ export const AuthenticatedRoute = ({ component }: Props) => {
       <div className={styles.container}>
         <div className={styles.title}>Note Calendar</div>
 
-        <div className={styles['sub-container']}>
-          <div className="sub-title">Sign in or sign up to continue.</div>
-
-          <button onClick={signInAnonymously}>Sign in anonymously</button>
+        <div className={styles.subContainer}>
+          <button onClick={signInAnonymously}>Use without signing in</button>
         </div>
 
         <Auth
