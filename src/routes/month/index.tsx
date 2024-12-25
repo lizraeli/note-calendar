@@ -199,15 +199,24 @@ const DayCell = ({
   const selectRoute = `/year/${date.getFullYear()}/month/${
     date.getMonth() + 1
   }/day/${date.getDate()}`;
+  const unselectRoute = `/year/${date.getFullYear()}/month/${
+    date.getMonth() + 1
+  }/day/`;
   const editRoute = `../../day/${dateToString(date)}`;
   const isTransitioningToDay = unstable_useViewTransitionState(editRoute);
 
   const isDayToday = isToday(date);
   const dayOfWeek = date.getDay();
 
-  const onClick = () => {
+  const select = () => {
     if (!isSelected) {
       navigate(selectRoute);
+    }
+  };
+
+  const unselect = () => {
+    if (isSelected) {
+      navigate(unselectRoute, { unstable_viewTransition: true });
     }
   };
 
@@ -224,13 +233,14 @@ const DayCell = ({
         style={{
           viewTransitionName: isTransitioningToDay ? 'day' : '',
         }}
-        onClick={onClick}
+        onClick={select}
       >
         <DailyNotesPreview
           key={date.getTime()}
           html={html}
           date={date}
           isSelected={isSelected}
+          unselect={unselect}
           editUrl={editRoute}
         />
       </div>

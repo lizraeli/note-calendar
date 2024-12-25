@@ -18,8 +18,6 @@ export default function Header({ user }: Props) {
     }
   };
 
-  console.log('user: ', user);
-
   return (
     <div id={styles.header}>
       <div>{user.is_anonymous ? 'Not signed in' : user.email}</div>

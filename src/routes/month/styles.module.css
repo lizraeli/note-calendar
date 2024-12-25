@@ -39,12 +39,10 @@
 
 .monthControls {
   position: fixed;
-  top: 0;
+  top: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: #fefefe; */
-  /* border-radius: 5px; */
   gap: 15px;
   z-index: 100;
 
@@ -58,8 +56,8 @@
     transition-timing-function: ease-in-out;
   }
 
-  a:hover {
-    transform: scale(1.4);
+  a:hover svg {
+    filter: invert(50%);
   }
 }
 
@@ -73,7 +71,6 @@
 }
 
 .monthName {
-  /* font-family: Lato, serif; */
   width: 150px;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -96,12 +93,13 @@
   margin-bottom: 50px;
   display: grid;
   grid-template-columns: repeat(7, minmax(20px, 100px));
+  background-color: hsl(10, 70%, 98%, 0.3);
 }
 
 .cell {
   margin: 2px;
   align-items: center;
-  height: clamp(50px, 10vw, 100px);
+  height: clamp(50px, 14vw, 100px);
   overflow: hidden;
 }
 
@@ -119,8 +117,8 @@
   justify-content: center;
   font-weight: 600;
   top: 80px;
-  background-color: #f9f2f2;
-  z-index: -1;
+  background-color: hsl(0, 37%, 96%);
+  z-index: 1;
   border: 1px solid;
   border-radius: 5px;
   height: fit-content;
@@ -131,9 +129,10 @@
   border: 1px solid rgb(173, 150, 150);
   cursor: pointer;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: var(--shadow-elevation-low);
-  background-color: #f9f2f2;
+  /* background-color: #f9f2f2; */
+  background-color: hsl(10, 70%, 97%);
   overflow: hidden;
 }
 
@@ -174,25 +173,6 @@
   composes: dayCell;
   font-weight: 700;
   font-size: 14px;
-}
-
-@keyframes day-selected {
-  0% {
-    top: 0;
-    left: 0;
-    transform: initial;
-  }
-
-  50% {
-    top: 50%;
-    left: 50%;
-  }
-
-  100% {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 }
 
 @keyframes fade-in {

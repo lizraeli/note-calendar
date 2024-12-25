@@ -123,7 +123,7 @@ function DailyNotes() {
           </div>
 
           {fetchingError ? (
-            <div className={styles['errorContainer']}>Error fetching note</div>
+            <div className={styles.errorContainer}>Error fetching note</div>
           ) : (
             <TextEditor
               html={note ? note.content : ''}
