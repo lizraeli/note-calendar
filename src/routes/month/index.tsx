@@ -147,16 +147,14 @@ function MonthView() {
           >
             <div className={styles.daysInMonth}>
               {daysOfTheWeek.map((dayName) => (
-                <div key={dayName} className={styles['dayNameCell']}>
+                <div key={dayName} className={styles.dayNameCell}>
                   {dayName}
                 </div>
               ))}
 
               {daysAndEmptySpaces.map((date, index) => {
                 if (date === null) {
-                  return (
-                    <div key={index} className={styles['emptyCell']}></div>
-                  );
+                  return <div key={index} className={styles.emptyCell}></div>;
                 }
 
                 const html = isFetching
