@@ -1,19 +1,19 @@
-.button-group {
+.buttonGroup {
   display: flex;
   gap: 5px;
   padding-bottom: 5px;
 }
 
-.button-group button {
+.buttonGroup button {
   background-color: #f9f2f2;
 }
 
-.button-group button svg {
+.buttonGroup button svg {
   width: clamp(18px, 2vw, 24px);
   height: clamp(18px, 2vw, 24px);
 }
 
-.button-group button.is-active {
+.buttonGroup button.is-active {
   background-color: #e8e3f1;
 }
 

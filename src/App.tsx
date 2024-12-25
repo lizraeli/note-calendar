@@ -9,8 +9,9 @@ function App() {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
+    const day = date.getDate();
 
-    navigate(`/year/${year}/month/${month}`);
+    navigate(`/year/${year}/month/${month}/${day}`);
   }, [navigate]);
 
   return <Spinner fullPage />;

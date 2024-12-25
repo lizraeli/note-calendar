@@ -1,4 +1,4 @@
-.daily-note-container {
+.dailyNoteContainer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,14 +9,14 @@
   }
 }
 
-.error-container {
+.errorContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 200px;
 }
 
-.editing-container {
+.editorContainer {
   display: flex;
   flex-direction: column;
 
@@ -29,18 +29,25 @@
 
 .header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
-.all-notes-link {
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.allNotesLink {
   flex: 1;
   button {
     padding: 8px;
   }
 }
 
-.daily-note-controls {
+.dailyNoteControls {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -57,13 +64,13 @@
     transition-timing-function: ease-in-out;
   }
 
-  a:hover {
-    transform: scale(1.4);
+  a:hover svg {
+    filter: invert(70%);
   }
 }
 
 .date {
-  font-size: clamp(14px, 4vw, 16px);
+  font-size: clamp(14px, 3.5vw, 16px);
   font-weight: 600;
 }
 
@@ -71,4 +78,6 @@
   font-size: clamp(12px, 2vw, 14px);
 
   padding: 0 10px;
+  /* align-self: flex-end; */
+  justify-self: end;
 }

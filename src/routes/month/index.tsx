@@ -14,6 +14,7 @@ import LeftArrowIcon from '../../assets/arrow-left.svg';
 import RightArrowIcon from '../../assets/arrow-right.svg';
 import styles from './styles.module.css';
 import classNames from 'classnames';
+import { useEffect, useMemo, useRef } from 'react';
 
 function getTodayUrl() {
   const date = new Date();
@@ -86,11 +87,34 @@ function MonthView() {
   const isTransitioningToNextMonth =
     unstable_useViewTransitionState(nextMonthUrl);
 
+  const selectedDate = useMemo(
+    () => calcSelectedDate({ year, month, dayParam }),
+    [year, month, dayParam]
+  );
+
+  const todayDivRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isFetching || !selectedDate) {
+      return;
+    }
+
+    if (isToday(selectedDate)) {
+      // scroll to today's cell
+      if (todayDivRef.current) {
+        try {
+          todayDivRef.current.scrollIntoView({ behavior: 'smooth' });
+        } catch {
+          todayDivRef.current.scrollIntoView();
+        }
+      }
+    }
+  }, [selectedDate, isFetching]);
+
   if (!notesCalendar || Number.isNaN(year) || Number.isNaN(month)) {
     return <Spinner fullPage />;
   }
 
-  const selectedDate = calcSelectedDate({ year, month, dayParam });
   const todayUrl = getTodayUrl();
 
   return (
@@ -142,6 +166,7 @@ function MonthView() {
                 return (
                   <DayCell
                     key={date.toISOString()}
+                    divRef={isToday(date) ? todayDivRef : null}
                     date={date}
                     isFetching={isFetching}
                     html={html}
@@ -159,34 +184,44 @@ function MonthView() {
 
 const DayCell = ({
   date,
-  // isFetching,
   html,
   isSelected,
+  divRef,
 }: {
   date: Date;
   isFetching: boolean;
   html: string;
   isSelected: boolean;
+  divRef: React.Ref<HTMLDivElement> | null;
 }) => {
   const navigate = useNavigate();
 
   const selectRoute = `/year/${date.getFullYear()}/month/${
     date.getMonth() + 1
   }/day/${date.getDate()}`;
+  const unselectRoute = `/year/${date.getFullYear()}/month/${
+    date.getMonth() + 1
+  }/day/`;
   const editRoute = `../../day/${dateToString(date)}`;
   const isTransitioningToDay = unstable_useViewTransitionState(editRoute);
 
   const isDayToday = isToday(date);
   const dayOfWeek = date.getDay();
 
-  const onClick = () => {
+  const select = () => {
     if (!isSelected) {
       navigate(selectRoute);
     }
   };
 
+  const unselect = () => {
+    if (isSelected) {
+      navigate(unselectRoute, { unstable_viewTransition: true });
+    }
+  };
+
   return (
-    <div style={{ position: 'relative' }}>
+    <div ref={divRef}>
       <div
         className={classNames(styles.dayCell, styles.up, {
           [styles.today]: isDayToday,
@@ -198,13 +233,14 @@ const DayCell = ({
         style={{
           viewTransitionName: isTransitioningToDay ? 'day' : '',
         }}
-        onClick={onClick}
+        onClick={select}
       >
         <DailyNotesPreview
           key={date.getTime()}
           html={html}
           date={date}
           isSelected={isSelected}
+          unselect={unselect}
           editUrl={editRoute}
         />
       </div>
