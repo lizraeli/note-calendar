@@ -2,7 +2,7 @@
 
 A web application for managing daily notes in a calendar format. Users can easily edit notes for specific dates and view a monthly calendar to keep track of their notes.
 
-**Live Demo:** [note-calendar.netlify.app](https://note-calendar.netlify.app/)
+**Live Demo:** [note-calendar.levizraelit.com](https://note-calendar.levizraelit.com)
 
 ## Table of Contents
 
@@ -25,7 +25,7 @@ A web application for managing daily notes in a calendar format. Users can easil
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/lizraeli  /note-calendar.git
+   git clone https://github.com/lizraeli/daily-notes.git
    ```
 2. Navigate to the project directory:
    ```bash
