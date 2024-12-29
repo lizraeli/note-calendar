@@ -1,20 +1,19 @@
 import DailyNotesPreview from '../../components/NotesPreview';
-import { format } from 'date-fns/format';
 import {
   useNavigate,
-  useParams,
   Link,
   unstable_useViewTransitionState,
 } from 'react-router-dom';
 import { addMonths, isSameDay, isToday, subMonths } from 'date-fns';
 import { useNotesForMonth } from '../../hooks';
-import { getDaysInMonth } from '../../utils';
+import { dateToString, getDaysInMonth } from '../../utils';
 import Spinner from '../../components/Spinner';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
 import RightArrowIcon from '../../assets/arrow-right.svg';
 import styles from './styles.module.css';
 import classNames from 'classnames';
 import { useEffect, useMemo, useRef } from 'react';
+import { useMonthParams } from './hooks';
 
 function getTodayUrl() {
   const date = new Date();
@@ -28,38 +27,11 @@ function monthAndYearDisplay(date: Date) {
   return `${monthName} ${date.getFullYear()}`;
 }
 
-function dateToString(date: Date) {
-  return format(date, 'yyyy-MM-dd');
-}
-
 const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-function calcSelectedDate({
-  year,
-  month,
-  dayParam,
-}: {
-  year: number;
-  month: number;
-  dayParam?: string;
-}) {
-  if (!dayParam) {
-    return null;
-  }
-
-  const day = Number(dayParam);
-  if (Number.isNaN(day)) {
-    return null;
-  }
-
-  return new Date(year, month - 1, day);
-}
-
 function MonthView() {
-  const { year: yearParam, month: monthParam, day: dayParam } = useParams();
-  const { notesCalendar, isFetching } = useNotesForMonth(monthParam, yearParam);
-  const year = Number(yearParam);
-  const month = Number(monthParam);
+  const { year, month, day } = useMonthParams();
+  const { notesCalendar, isFetching } = useNotesForMonth(month, year);
 
   const daysInMonth = getDaysInMonth(month, year);
   const firstDay = daysInMonth[0];
@@ -87,10 +59,13 @@ function MonthView() {
   const isTransitioningToNextMonth =
     unstable_useViewTransitionState(nextMonthUrl);
 
-  const selectedDate = useMemo(
-    () => calcSelectedDate({ year, month, dayParam }),
-    [year, month, dayParam]
-  );
+  const selectedDate = useMemo(() => {
+    if (!day || Number.isNaN(day)) {
+      return null;
+    }
+
+    return new Date(year, month - 1, day);
+  }, [year, month, day]);
 
   const todayDivRef = useRef<HTMLDivElement>(null);
 
@@ -180,6 +155,22 @@ function MonthView() {
   );
 }
 
+function getDayRoutes(date: Date) {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  const selectRoute = `/year/${year}/month/${month}/day/${day}`;
+  const unselectRoute = `/year/${year}/month/${month}`;
+  const editRoute = `/year/${year}/month/${month}/day/${day}/edit`;
+
+  return {
+    selectRoute,
+    unselectRoute,
+    editRoute,
+  };
+}
+
 const DayCell = ({
   date,
   html,
@@ -193,14 +184,10 @@ const DayCell = ({
   divRef: React.Ref<HTMLDivElement> | null;
 }) => {
   const navigate = useNavigate();
-
-  const selectRoute = `/year/${date.getFullYear()}/month/${
-    date.getMonth() + 1
-  }/day/${date.getDate()}`;
-  const unselectRoute = `/year/${date.getFullYear()}/month/${
-    date.getMonth() + 1
-  }/day/`;
-  const editRoute = `../../day/${dateToString(date)}`;
+  const { selectRoute, unselectRoute, editRoute } = useMemo(
+    () => getDayRoutes(date),
+    [date]
+  );
   const isTransitioningToDay = unstable_useViewTransitionState(editRoute);
 
   const isDayToday = isToday(date);

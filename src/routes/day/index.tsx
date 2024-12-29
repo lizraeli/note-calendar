@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { addDays, subDays } from 'date-fns';
-import { dateFormatterLong, dateToString, stringToDate } from '../../utils';
+import { dateFormatterLong } from '../../utils';
 import TextEditor from '../../components/TextEditor';
 import HomeIcon from '../../assets/home.svg';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
@@ -9,6 +9,7 @@ import RightArrowIcon from '../../assets/arrow-right.svg';
 import { addNote, getNoteByDate, Note, debouncedUpdateNote } from '../../api';
 import Spinner from '../../components/Spinner';
 import styles from './styles.module.css';
+import { useDayParams } from './hooks';
 
 enum SaveState {
   IDLE = 'IDLE',
@@ -16,38 +17,49 @@ enum SaveState {
   SAVED = 'SAVED',
 }
 
+function getDayUrls(date: Date) {
+  const prevDay = subDays(date, 1);
+  const nextDay = addDays(date, 1);
+
+  const prevDayUrl = `/year/${prevDay.getFullYear()}/month/${
+    prevDay.getMonth() + 1
+  }/day/${prevDay.getDate()}/edit`;
+  const nextDayUrl = `/year/${nextDay.getFullYear()}/month/${
+    nextDay.getMonth() + 1
+  }/day/${nextDay.getDate()}/edit`;
+  const monthUrl = `/year/${prevDay.getFullYear()}/month/${
+    date.getMonth() + 1
+  }`;
+
+  return { prevDayUrl, nextDayUrl, monthUrl };
+}
+
 function DailyNotes() {
   const navigate = useNavigate();
-  const { date: urlDate } = useParams();
+  const { year, month, day } = useDayParams();
   const [note, setNote] = useState<Note | null>(null);
   const [saveState, setSaveState] = useState<SaveState>(SaveState.IDLE);
   const [isFetchingNote, setIsFetchingNote] = useState(false);
   const [fetchingError, setFetchingError] = useState<unknown>(null);
-  const parsedDate = useMemo(
-    () => (urlDate ? stringToDate(urlDate) : null),
-    [urlDate]
+
+  const date = useMemo(
+    () => new Date(year, month - 1, day),
+    [year, month, day]
   );
 
-  const prevDay = parsedDate && subDays(parsedDate, 1);
-  const prevDayUrl = prevDay && `/day/${dateToString(prevDay)}`;
-  const nextDay = parsedDate && addDays(parsedDate, 1);
-  const nextDayUrl = nextDay && `/day/${dateToString(nextDay)}`;
+  const { prevDayUrl, nextDayUrl, monthUrl } = getDayUrls(date);
 
   useEffect(() => {
-    if (!parsedDate) {
-      return;
-    }
-
-    const doFetchNote = async () => {
+    const fetchNote = async () => {
       try {
         setIsFetchingNote(true);
 
-        const fetchedNote = await getNoteByDate(parsedDate);
+        const fetchedNote = await getNoteByDate(date);
         if (fetchedNote) {
           setNote(fetchedNote);
         } else {
-          const addedNodeDoc = await addNote(parsedDate);
-          setNote(addedNodeDoc);
+          const addedNode = await addNote(date);
+          setNote(addedNode);
         }
         setIsFetchingNote(false);
       } catch (err) {
@@ -56,8 +68,8 @@ function DailyNotes() {
       }
     };
 
-    doFetchNote();
-  }, [urlDate, parsedDate]);
+    fetchNote();
+  }, [date]);
 
   const onUpdateHtml = (html: string) => {
     if (!note) {
@@ -74,7 +86,7 @@ function DailyNotes() {
   };
 
   const content = () => {
-    if (!parsedDate) {
+    if (!date) {
       return <Spinner fullPage />;
     }
 
@@ -89,7 +101,7 @@ function DailyNotes() {
               <a
                 className={styles.allNotesLink}
                 onClick={() =>
-                  navigate('..', { unstable_viewTransition: true })
+                  navigate(monthUrl, { unstable_viewTransition: true })
                 }
               >
                 <button>
@@ -109,11 +121,11 @@ function DailyNotes() {
           <div className={styles.dailyNoteControls}>
             {prevDayUrl && (
               <Link to={prevDayUrl}>
-                <LeftArrowIcon title="right-arrow-large" />
+                <LeftArrowIcon title="left-arrow-large" />
               </Link>
             )}
             <div className={styles.date}>
-              Notes for {dateFormatterLong.format(parsedDate)}
+              Notes for {dateFormatterLong.format(date)}
             </div>
             {nextDayUrl && (
               <Link to={nextDayUrl}>

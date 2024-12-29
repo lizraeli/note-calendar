@@ -1,5 +1,5 @@
 import { Tables } from './supabase/types';
-import { stringMonthYearToDate } from './utils';
+import { monthAndYearToDate } from './utils';
 import supabase from './supabase';
 import pDebounce from 'p-debounce';
 
@@ -18,9 +18,9 @@ export async function getNotes() {
   return notes;
 }
 
-export async function getNotesForMonth(month: string, year: string) {
-  const monthDate = stringMonthYearToDate(month, year);
-  const nextMonthDate = stringMonthYearToDate(month + 1, year);
+export async function getNotesForMonth(month: number, year: number) {
+  const monthDate = monthAndYearToDate(month, year);
+  const nextMonthDate = monthAndYearToDate(month + 1, year);
 
   const { data: notes } = await supabase
     .from('notes')

@@ -8,9 +8,19 @@ export function stringToDate(urlDate: string) {
   return parse(urlDate, 'yyyy-MM-dd', new Date());
 }
 
-export function stringMonthYearToDate(stringMonth: string, stringYear: string) {
+export function monthAndYearToDate(month: number, year: number) {
   // Javascript counts months from 0: January - 0, February - 1, etc.
-  const date = new Date(Number(stringYear), Number(stringMonth) - 1);
+  const date = new Date(year, month - 1);
+  return date;
+}
+
+export function monthYearAndDayToDate(
+  month: number,
+  year: number,
+  day: number
+) {
+  // Javascript counts months from 0: January - 0, February - 1, etc.
+  const date = new Date(year, month - 1, day);
   return date;
 }
 

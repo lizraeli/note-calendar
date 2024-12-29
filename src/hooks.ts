@@ -4,7 +4,7 @@ import { getNotesForMonth } from './api';
 type DateString = string;
 type NotesCalendar = Record<DateString, string>;
 
-export function useNotesForMonth(month?: string, year?: string) {
+export function useNotesForMonth(month?: number, year?: number) {
   const [isFetching, setIsFetching] = useState(false);
   const [notesCalendar, setNotesCalendar] = useState<NotesCalendar | null>(
     null
