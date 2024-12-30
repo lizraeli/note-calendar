@@ -4,8 +4,8 @@ import {
   Link,
   unstable_useViewTransitionState,
 } from 'react-router-dom';
-import { addMonths, isSameDay, isToday, subMonths } from 'date-fns';
-import { useNotesForMonth } from '../../hooks';
+import { isSameDay, isToday } from 'date-fns';
+import { NotesCalendar, useNotesForMonth } from '../../hooks';
 import { dateToString, getDaysInMonth } from '../../utils';
 import Spinner from '../../components/Spinner';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
@@ -14,15 +14,9 @@ import styles from './styles.module.css';
 import classNames from 'classnames';
 import { useEffect, useMemo, useRef } from 'react';
 import { useMonthParams } from './hooks';
+import { getMonthUrls } from './utils';
 
-function getTodayUrl() {
-  const date = new Date();
-  return `/year/${date.getFullYear()}/month/${
-    date.getMonth() + 1
-  }/day/${date.getDate()}`;
-}
-
-function monthAndYearDisplay(date: Date) {
+function displayMonthAndYear(date: Date) {
   const monthName = date.toLocaleString('default', { month: 'long' });
   return `${monthName} ${date.getFullYear()}`;
 }
@@ -36,22 +30,9 @@ function MonthView() {
   const daysInMonth = getDaysInMonth(month, year);
   const firstDay = daysInMonth[0];
 
-  const dayOfWeeks = firstDay.getDay();
-
-  const daysAndEmptySpaces = [
-    ...Array.from({ length: dayOfWeeks }, () => null),
-    ...daysInMonth,
-  ];
-
-  const prevMonth = subMonths(firstDay, 1);
-  const prevMonthUrl = `/year/${prevMonth.getFullYear()}/month/${
-    prevMonth.getMonth() + 1
-  }`;
-
-  const nextMonth = addMonths(firstDay, 1);
-  const nextMonthUrl = `/year/${nextMonth.getFullYear()}/month/${
-    nextMonth.getMonth() + 1
-  }`;
+  const { prevMonthUrl, nextMonthUrl, todayUrl } = getMonthUrls({
+    daysInMonth,
+  });
 
   const isTransitioningToPrevMonth =
     unstable_useViewTransitionState(prevMonthUrl);
@@ -66,6 +47,68 @@ function MonthView() {
 
     return new Date(year, month - 1, day);
   }, [year, month, day]);
+
+  if (Number.isNaN(year) || Number.isNaN(month)) {
+    return <Spinner fullPage />;
+  }
+
+  return (
+    <div className={styles.calendar}>
+      <div className={styles.container}>
+        <div className={styles.month}>
+          <div className={styles.header}>
+            <Link to={todayUrl}>Today</Link>
+          </div>
+          <div className={styles.monthControls}>
+            <Link to={prevMonthUrl} unstable_viewTransition>
+              <LeftArrowIcon aria-label="left arrow" />
+            </Link>
+            <div className={styles.monthName}>
+              {displayMonthAndYear(firstDay)}
+            </div>
+            <Link to={nextMonthUrl} unstable_viewTransition>
+              <RightArrowIcon aria-label="right arrow" />
+            </Link>
+          </div>
+          <div
+            style={{
+              viewTransitionName: isTransitioningToPrevMonth
+                ? 'prev-month'
+                : isTransitioningToNextMonth
+                ? 'next-month'
+                : '',
+            }}
+          >
+            <DaysInMonth
+              notesCalendar={notesCalendar}
+              daysInMonth={daysInMonth}
+              isFetching={isFetching}
+              selectedDate={selectedDate}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DaysInMonth({
+  daysInMonth,
+  isFetching,
+  notesCalendar,
+  selectedDate,
+}: {
+  daysInMonth: Date[];
+  isFetching: boolean;
+  notesCalendar: NotesCalendar | null;
+  selectedDate: Date | null;
+}) {
+  const firstDay = daysInMonth[0];
+  const dayOfWeeks = firstDay.getDay();
+  const daysAndEmptySpaces = [
+    ...Array.from({ length: dayOfWeeks }, () => null),
+    ...daysInMonth,
+  ];
 
   const todayDivRef = useRef<HTMLDivElement>(null);
 
@@ -86,71 +129,38 @@ function MonthView() {
     }
   }, [selectedDate, isFetching]);
 
-  if (!notesCalendar || Number.isNaN(year) || Number.isNaN(month)) {
+  if (!notesCalendar) {
     return <Spinner fullPage />;
   }
 
-  const todayUrl = getTodayUrl();
-
   return (
-    <div className={styles.calendar}>
-      <div className={styles.container}>
-        <div className={styles.month}>
-          <div className={styles.header}>
-            <Link to={todayUrl}>Today</Link>
-          </div>
-          <div className={styles.monthControls}>
-            <Link to={prevMonthUrl} unstable_viewTransition>
-              <LeftArrowIcon aria-label="left arrow" />
-            </Link>
-            <div className={styles.monthName}>
-              {monthAndYearDisplay(firstDay)}
-            </div>
-            <Link to={nextMonthUrl} unstable_viewTransition>
-              <RightArrowIcon aria-label="right arrow" />
-            </Link>
-          </div>
-          <div
-            className={styles.daysInMonthContainer}
-            style={{
-              viewTransitionName: isTransitioningToPrevMonth
-                ? 'prev-month'
-                : isTransitioningToNextMonth
-                ? 'next-month'
-                : '',
-            }}
-          >
-            <div className={styles.daysInMonth}>
-              {daysOfTheWeek.map((dayName) => (
-                <div key={dayName} className={styles.dayNameCell}>
-                  {dayName}
-                </div>
-              ))}
-
-              {daysAndEmptySpaces.map((date, index) => {
-                if (date === null) {
-                  return <div key={index} className={styles.emptyCell}></div>;
-                }
-
-                const html = isFetching
-                  ? ''
-                  : notesCalendar[dateToString(date)] || '...';
-
-                return (
-                  <DayCell
-                    key={date.toISOString()}
-                    divRef={isToday(date) ? todayDivRef : null}
-                    date={date}
-                    isFetching={isFetching}
-                    html={html}
-                    isSelected={!!selectedDate && isSameDay(date, selectedDate)}
-                  />
-                );
-              })}
-            </div>
-          </div>
+    <div className={styles.daysInMonth}>
+      {daysOfTheWeek.map((dayName) => (
+        <div key={dayName} className={styles.dayNameCell}>
+          {dayName}
         </div>
-      </div>
+      ))}
+
+      {daysAndEmptySpaces.map((date, index) => {
+        if (date === null) {
+          return <div key={index} className={styles.emptyCell}></div>;
+        }
+
+        const html = isFetching
+          ? ''
+          : notesCalendar[dateToString(date)] || '...';
+
+        return (
+          <DayCell
+            key={date.toISOString()}
+            divRef={isToday(date) ? todayDivRef : null}
+            date={date}
+            isFetching={isFetching}
+            html={html}
+            isSelected={!!selectedDate && isSameDay(date, selectedDate)}
+          />
+        );
+      })}
     </div>
   );
 }

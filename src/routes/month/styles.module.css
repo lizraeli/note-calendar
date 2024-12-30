@@ -80,13 +80,6 @@
   justify-content: center;
 }
 
-.daysInMonthContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-}
-
 .daysInMonth {
   position: relative;
   margin-bottom: 50px;
@@ -202,7 +195,7 @@
   }
 
   .header {
-    padding-top: 50px;
+    padding-top: 80px;
   }
 
   .monthControls {
