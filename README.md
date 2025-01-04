@@ -41,13 +41,21 @@ A web application for managing daily notes in a calendar format. Users can easil
 
 ### Available Routes
 
-- **Edit Notes for a Specific Date**
-  - Route: `/day/YYYY-MM-DD`
-  - Example: `/day/2023-10-19`
 
-- **View Monthly Calendar**
+- **Monthly Calendar View**
   - Route: `/year/YYYY/month/MM`
   - Example: `/year/2023/month/10`
+
+
+- **Monthly Calendar View with Selected Day**
+  - Route: `/year/YYYY/month/MM/day/DD`
+  - Example: `/year/2023/month/10/day/21`
+
+
+- **Edit Notes for a Specific Date**
+  - Route: `/year/YYYY/month/MM/day/DD/edit`
+  - Example: `/year/2023/month/10/day/21/edit`
+
 
 After setting up, run the application:
 ```bash

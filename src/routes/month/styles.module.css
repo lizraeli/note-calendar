@@ -142,15 +142,15 @@
   transition: transform 0.5s, width 0.5s, height 0.5s;
 }
 
-.dayCell.selected.left.up {
+.dayCell.selected.hoverLeft.hoverUp {
   transform: translate(-30%, -20%);
 }
 
-.dayCell.selected.straight.up {
+.dayCell.selected.hoverStraight.hoverUp {
   transform: translate(-10%, -20%);
 }
 
-.dayCell.selected.right.up {
+.dayCell.selected.hoverRight.hoverUp {
   transform: translate(5%, -20%);
 }
 
@@ -202,7 +202,7 @@
     top: 80px;
   }
 
-  .dayCell.selected.left.up {
+  .dayCell.selected.hoverLeft.hoverUp {
     transform: translate(-50%, -20%);
   }
 }

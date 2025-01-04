@@ -12,12 +12,12 @@ const router = createBrowserRouter([
     element: <AuthenticatedRoute component={App} />,
   },
   {
-    path: '/year/:year/month/:month/day/:day/edit',
-    element: <AuthenticatedRoute component={DailyNotes} />,
-  },
-  {
     path: '/year/:year/month/:month/day?/:day?',
     element: <AuthenticatedRoute component={MonthView} />,
+  },
+  {
+    path: '/year/:year/month/:month/day/:day/edit',
+    element: <AuthenticatedRoute component={DailyNotes} />,
   },
 ]);
 

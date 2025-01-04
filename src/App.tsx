@@ -11,7 +11,7 @@ function App() {
     const month = date.getMonth() + 1;
     const day = date.getDate();
 
-    navigate(`/year/${year}/month/${month}/${day}`);
+    navigate(`/year/${year}/month/${month}/day/${day}`);
   }, [navigate]);
 
   return <Spinner fullPage />;

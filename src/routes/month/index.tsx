@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import { isSameDay, isToday } from 'date-fns';
 import { NotesCalendar, useNotesForMonth } from '../../hooks';
-import { dateToString, getDaysInMonth } from '../../utils';
+import { dateToString, getDaysInMonth, isElementInViewport } from '../../utils';
 import Spinner from '../../components/Spinner';
 import LeftArrowIcon from '../../assets/arrow-left.svg';
 import RightArrowIcon from '../../assets/arrow-right.svg';
@@ -118,11 +118,12 @@ function DaysInMonth({
     }
 
     if (isToday(selectedDate)) {
-      // scroll to today's cell
-      if (todayDivRef.current) {
+      // scroll to today's cell if not in view
+      if (todayDivRef.current && !isElementInViewport(todayDivRef.current)) {
         try {
           todayDivRef.current.scrollIntoView({ behavior: 'smooth' });
         } catch {
+          // fallback for browser's where the scrollIntoView object param is not supported
           todayDivRef.current.scrollIntoView();
         }
       }
@@ -218,12 +219,12 @@ const DayCell = ({
   return (
     <div ref={divRef}>
       <div
-        className={classNames(styles.dayCell, styles.up, {
+        className={classNames(styles.dayCell, styles.hoverUp, {
           [styles.today]: isDayToday,
           [styles.selected]: isSelected,
-          [styles.left]: dayOfWeek === 6,
-          [styles.straight]: dayOfWeek >= 1 && dayOfWeek <= 5,
-          [styles.right]: dayOfWeek === 0,
+          [styles.hoverLeft]: dayOfWeek === 6,
+          [styles.hoverStraight]: dayOfWeek >= 1 && dayOfWeek <= 5,
+          [styles.hoverUp]: dayOfWeek === 0,
         })}
         style={{
           viewTransitionName: isTransitioningToDay ? 'day' : '',

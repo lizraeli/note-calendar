@@ -56,3 +56,15 @@ export const dateFormatterLong = new Intl.DateTimeFormat(navigator.language, {
   day: '2-digit',
   year: '2-digit',
 });
+
+export function isElementInViewport(elem: Element) {
+  const rect = elem.getBoundingClientRect();
+
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <=
+      (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}
