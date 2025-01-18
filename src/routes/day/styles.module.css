@@ -1,4 +1,5 @@
 .dailyNoteContainer {
+  width: min(95vw, 700px);
   display: flex;
   align-items: center;
   justify-content: center;

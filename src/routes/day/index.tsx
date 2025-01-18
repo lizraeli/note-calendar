@@ -124,9 +124,11 @@ function DailyNotes() {
                 <LeftArrowIcon title="left-arrow-large" />
               </Link>
             )}
+
             <div className={styles.date}>
               Notes for {dateFormatterLong.format(date)}
             </div>
+
             {nextDayUrl && (
               <Link to={nextDayUrl}>
                 <RightArrowIcon title="right-arrow-large" />
