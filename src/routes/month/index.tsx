@@ -223,8 +223,8 @@ const DayCell = ({
           [styles.today]: isDayToday,
           [styles.selected]: isSelected,
           [styles.hoverLeft]: dayOfWeek === 6,
+          [styles.hoverRight]: dayOfWeek === 0,
           [styles.hoverStraight]: dayOfWeek >= 1 && dayOfWeek <= 5,
-          [styles.hoverUp]: dayOfWeek === 0,
         })}
         style={{
           viewTransitionName: isTransitioningToDay ? 'day' : '',
