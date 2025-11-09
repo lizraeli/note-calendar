@@ -24,16 +24,6 @@ export function monthYearAndDayToDate(
   return date;
 }
 
-export const getDaysInYear = (year: number): Date[][] => {
-  const days: Date[][] = [];
-  for (let i = 0; i < 12; i++) {
-    const daysInMonth = getDaysInMonth(i, year);
-    days.push(daysInMonth);
-  }
-
-  return days;
-};
-
 export function getDaysInMonth(month: number, year: number): Date[] {
   const jsMonth = month - 1;
   const date = new Date(year, jsMonth, 1);
