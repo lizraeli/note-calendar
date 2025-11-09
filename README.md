@@ -83,7 +83,7 @@ You can access the app at `http://localhost:5173`.
   - [PostCSS Preset Env](https://preset-env.cssdb.org/) - Converts modern CSS into something most browsers can understand
 
 - **Backend:**
-  - [Supabase](https://github.com/supabase/supabase) - Database and authentication service. See [supabase.sql](supabase.sql) for database schema.
+  - [Supabase](https://github.com/supabase/supabase) - Database and authentication service.
 
 ## Contributing
 

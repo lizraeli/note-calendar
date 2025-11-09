@@ -4,14 +4,14 @@ import supabase from '.';
 
 export default function useSession() {
   const [session, setSession] = useState<Session | null>(null);
-  const [isFetchingSession, setIsFecthingSession] = useState(false);
+  const [isFetchingSession, setIsFetchingSession] = useState(false);
 
   useEffect(() => {
     const fetchSession = async () => {
-      setIsFecthingSession(true);
+      setIsFetchingSession(true);
       const { data } = await supabase.auth.getSession();
       setSession(data.session);
-      setIsFecthingSession(false);
+      setIsFetchingSession(false);
     };
 
     fetchSession();

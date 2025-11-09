@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getNotesForMonth } from './api';
+import { dateToString } from './utils';
 
 type DateString = string;
 export type NotesCalendar = Record<DateString, string>;
@@ -20,13 +21,14 @@ export function useNotesForMonth(month?: number, year?: number) {
         setIsFetching(true);
         const fetchedNotes = await getNotesForMonth(month, year);
 
-        const calendar = fetchedNotes.reduce(
-          (calendar, note) => ({
+        const calendar = fetchedNotes.reduce((calendar, note) => {
+          // Convert ISO date string to yyyy-MM-dd format for consistent keys
+          const dateKey = dateToString(new Date(note.date));
+          return {
             ...calendar,
-            [note.date]: note.content,
-          }),
-          {} as NotesCalendar
-        );
+            [dateKey]: note.content,
+          };
+        }, {} as NotesCalendar);
 
         setNotesCalendar(calendar);
         setIsFetching(false);

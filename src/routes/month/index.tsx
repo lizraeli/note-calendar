@@ -52,6 +52,9 @@ function MonthView() {
     return <Spinner fullPage />;
   }
 
+  console.log('Rendering MonthView for', month, year);
+  console.log('Notes Calendar:', notesCalendar);
+
   return (
     <div className={styles.calendar}>
       <div className={styles.container}>
@@ -109,6 +112,7 @@ function DaysInMonth({
     ...Array.from({ length: dayOfWeeks }, () => null),
     ...daysInMonth,
   ];
+  console.log('Days and Empty Spaces:', daysAndEmptySpaces);
 
   const todayDivRef = useRef<HTMLDivElement>(null);
 
@@ -147,6 +151,7 @@ function DaysInMonth({
           return <div key={index} className={styles.emptyCell}></div>;
         }
 
+        console.log('dateToString(date): ', dateToString(date));
         const html = isFetching
           ? ''
           : notesCalendar[dateToString(date)] || '...';
