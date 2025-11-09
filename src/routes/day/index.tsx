@@ -121,7 +121,7 @@ function DailyNotes() {
           <div className={styles.dailyNoteControls}>
             {prevDayUrl && (
               <Link to={prevDayUrl}>
-                <LeftArrowIcon title="left-arrow-large" />
+                <LeftArrowIcon aria-label="left-arrow-large" />
               </Link>
             )}
 
@@ -131,7 +131,7 @@ function DailyNotes() {
 
             {nextDayUrl && (
               <Link to={nextDayUrl}>
-                <RightArrowIcon title="right-arrow-large" />
+                <RightArrowIcon aria-label="right-arrow-large" />
               </Link>
             )}
           </div>
