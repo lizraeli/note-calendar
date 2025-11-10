@@ -20,7 +20,7 @@ export default function Header({ user }: Props) {
 
   return (
     <div id={styles.header}>
-      <div>{user.is_anonymous ? 'Not signed in' : user.email}</div>
+      <div>{user.is_anonymous ? 'Note Calendar' : user.email}</div>
       <div id={styles.signOut} onClick={onSignOut}>
         {user.is_anonymous ? 'Sign in' : 'Sign out'}
       </div>
